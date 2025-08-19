@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RwandaVisa.com - Your Trusted Gateway to Rwanda</title>
+    <title>Rwanda eVisa Assistance | Fast & Secure Support | RwandaVisa.com</title>
+    <meta name="description" content="Expert assistance for applying for a Rwanda eVisa. We support your application with document review, guidance, and end-to-end help. Plus residency, business setup, tours, transport, and insurance.">
+    <meta name="keywords" content="Rwanda visa, Rwanda eVisa, apply Rwanda visa online, Rwanda residency, Rwanda business registration, Kigali tours, Rwanda airport pickup">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="author" content="RwandaVisa.com">
+    <meta name="theme-color" content="#1e40af">
+    <link rel="canonical" href="https://rwandavisa.com/">
+    <link rel="alternate" href="https://rwandavisa.com/" hreflang="en">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RwandaVisa.com">
+    <meta property="og:title" content="Rwanda eVisa Assistance – Fast, Secure, Expert Support | RwandaVisa.com">
+    <meta property="og:description" content="Trusted Rwanda eVisa assistance, residency permits, business registration, tours, transport, and travel insurance.">
+    <meta property="og:url" content="https://rwandavisa.com/">
+    <meta property="og:image" content="https://rwandavisa.com/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rwanda eVisa Assistance – Fast, Secure, Expert Support | RwandaVisa.com">
+    <meta name="twitter:description" content="Trusted Rwanda eVisa assistance, residency permits, business registration, tours, transport, and travel insurance.">
+    <meta name="twitter:image" content="https://rwandavisa.com/og-image.jpg">
     <style>
         * {
             margin: 0;
@@ -39,6 +58,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.75rem;
+            line-height: 1;
+            cursor: pointer;
         }
 
         .logo {
@@ -354,7 +383,20 @@
             
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 64px;
+                right: 20px;
+                background: rgba(30, 64, 175, 0.98);
+                backdrop-filter: blur(8px);
+                padding: 1rem 1.25rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                flex-direction: column;
+                gap: 1rem;
+                min-width: 200px;
             }
+            .nav-links[data-open="true"] { display: flex; }
+            .nav-toggle { display: inline-block; }
             
             .services-grid,
             .affiliate-grid {
@@ -380,13 +422,106 @@
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
             z-index: 1000;
         }
+
+        /* Accessibility: skip link */
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: -999px;
+        }
+        .skip-link:focus {
+            left: 16px;
+            top: 16px;
+            background: #fbbf24;
+            color: #1e40af;
+            padding: .5rem 1rem;
+            border-radius: 8px;
+            z-index: 1100;
+        }
+
+        /* Dark mode (modern look & better accessibility) */
+        @media (prefers-color-scheme: dark) {
+            body { color: #e5e7eb; background: #0b1220; }
+            header { box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+            .quick-links, .blog-preview, .affiliate-section { background: #0f172a; }
+            .services { background: #0b1220; }
+            .service-card, .affiliate-box, .blog-card { background: #0f172a; box-shadow: 0 6px 24px rgba(0,0,0,0.5); }
+            .service-card p, .service-features li, .blog-meta { color: #94a3b8; }
+            .section-title { color: #93c5fd; }
+            .quick-link { background: #0f172a; color: #bfdbfe; border-color: rgba(148,163,184,0.2); }
+            .quick-link:hover { background: #1e40af; color: #fff; }
+            footer { background: #0b1220; }
+            .footer-bottom { border-top-color: #1f2937; color: #9ca3af; }
+        }
     </style>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "RwandaVisa.com",
+      "url": "https://rwandavisa.com/",
+      "logo": "https://rwandavisa.com/logo.png",
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "telephone": "+250782388933",
+        "contactType": "customer service",
+        "availableLanguage": ["en"]
+      }],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kigali",
+        "addressCountry": "RW"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://rwandavisa.com/",
+      "name": "RwandaVisa.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://rwandavisa.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Rwanda eVisa Assistance",
+      "provider": {
+        "@type": "Organization",
+        "name": "RwandaVisa.com",
+        "url": "https://rwandavisa.com/"
+      },
+      "areaServed": {"@type": "Country", "name": "Rwanda"},
+      "offers": [{
+        "@type": "Offer",
+        "name": "Standard eVisa Support",
+        "price": "25",
+        "priceCurrency": "USD",
+        "url": "https://rwandavisa.com/#visa"
+      },{
+        "@type": "Offer",
+        "name": "Express Visa Service",
+        "price": "50",
+        "priceCurrency": "USD",
+        "url": "https://rwandavisa.com/#visa"
+      }]
+    }
+    </script>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <!-- Header -->
     <header>
-        <nav class="container">
+        <nav class="container" aria-label="Main">
             <div class="logo">🇷🇼 Rwanda Visa </div>
+            <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
             <ul class="nav-links">
                 <li><a href="#visa">Visa</a></li>
                 <li><a href="#residency">Residency</a></li>
@@ -399,11 +534,30 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="main">
         <div class="container">
-            <h1>Your Trusted Gateway to Rwanda</h1>
-            <p>Simplified visa applications, expert guidance, and complete travel solutions for your Rwanda journey</p>
-            <a href="#apply" class="cta-button">Apply for Rwanda Visa →</a>
+            <h1>Rwanda Services Assistance – Fast, Secure, Expert Support</h1>
+            <p>We support the process of applying for your Rwanda visa, hotel, tours, transport, business and insurance with expert guidance and document review.</p>
+            <a href="https://wa.me/250782388933" class="cta-button" target="_blank" rel="noopener noreferrer">WhatsApp Support →</a>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="services" aria-labelledby="support-title">
+        <div class="container">
+            <h2 id="support-title" class="section-title">Get Visa Assistance</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>📱 WhatsApp Support</h3>
+                    <p>Chat with our team for step-by-step guidance and document review.</p>
+                    <a href="https://wa.me/250782388933" class="cta-button" target="_blank" rel="noopener noreferrer">Message on WhatsApp →</a>
+                </div>
+                <div class="service-card">
+                    <h3>✉️ Email Support</h3>
+                    <p>Prefer email? Send your questions and documents and we’ll assist you promptly.</p>
+                    <a href="mailto:jenzzly@gmail.com" class="cta-button">Email Us →</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -473,6 +627,7 @@
     <section id="residency" class="services">
         <div class="container">
             <h2 class="section-title">Residency & Business Setup</h2>
+            <span id="business"></span>
             <div class="services-grid">
                 <div class="service-card">
                     <h3>🏠 Residency Permits</h3>
@@ -514,26 +669,26 @@
     </section>
 
     <!-- Affiliate Services -->
-    <section class="affiliate-section">
+    <section id="affiliate" class="affiliate-section">
         <div class="container">
             <h2 class="section-title">Travel & Booking Services</h2>
             <div class="affiliate-grid">
-                <div class="affiliate-box">
+                <div class="affiliate-box" id="hotels">
                     <h3>🏨 Search Hotels</h3>
                     <p>Find and book the perfect accommodation in Rwanda with our hotel search powered by Booking.com</p>
-                    <a href="#" class="cta-button">Search Hotels</a>
+                    <a href="#hotels" class="cta-button">Search Hotels</a>
                 </div>
                 
-                <div class="affiliate-box">
+                <div class="affiliate-box" id="tours">
                     <h3>🦍 Book Tours</h3>
                     <p>Discover Rwanda's incredible wildlife and culture with our curated tour packages</p>
-                    <a href="#" class="cta-button">Explore Tours</a>
+                    <a href="#tours" class="cta-button">Explore Tours</a>
                 </div>
                 
-                <div class="affiliate-box">
+                <div class="affiliate-box" id="insurance">
                     <h3>🛡️ Travel Insurance</h3>
                     <p>Protect your journey with comprehensive travel insurance from trusted providers</p>
-                    <a href="#" class="cta-button">Get Covered</a>
+                    <a href="#insurance" class="cta-button">Get Covered</a>
                 </div>
             </div>
         </div>
@@ -616,6 +771,7 @@
     <section id="blog" class="blog-preview">
         <div class="container">
             <h2 class="section-title">Latest Guides & Tips</h2>
+            <span id="guides"></span>
             <div class="blog-grid">
                 <div class="blog-card">
                     <div class="blog-card-content">
@@ -649,6 +805,58 @@
         </div>
     </section>
 
+
+    <!-- FAQ Section for SEO-rich results -->
+    <section id="faq" class="services" aria-labelledby="faq-title">
+        <div class="container">
+            <h2 id="faq-title" class="section-title">Rwanda eVisa FAQ</h2>
+            <div class="services-grid" style="grid-template-columns:1fr;">
+                <div class="service-card">
+                    <details>
+                        <summary><strong>Who needs a Rwanda eVisa?</strong></summary>
+                        <p>Most non-Rwandan nationals require an eVisa to enter Rwanda. Some nationalities can obtain visa on arrival. We will confirm your eligibility during assessment.</p>
+                    </details>
+                    <details>
+                        <summary><strong>How long does Rwanda eVisa processing take?</strong></summary>
+                        <p>Standard processing typically takes 5–7 business days. Our express service can reduce this to approximately 2–3 business days.</p>
+                    </details>
+                    <details>
+                        <summary><strong>What documents are required?</strong></summary>
+                        <p>Common documents include a valid passport, recent passport photo, travel itinerary, and proof of accommodation. Additional documents may be required depending on visa type.</p>
+                    </details>
+                    <details>
+                        <summary><strong>Can you help with airport pickup and hotels?</strong></summary>
+                        <p>Yes. We arrange reliable airport transfers and provide curated hotel options in Kigali and beyond.</p>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Who needs a Rwanda eVisa?",
+        "acceptedAnswer": {"@type": "Answer","text": "Most non-Rwandan nationals require an eVisa to enter Rwanda. Some nationalities can obtain visa on arrival."}
+      },{
+        "@type": "Question",
+        "name": "How long does Rwanda eVisa processing take?",
+        "acceptedAnswer": {"@type": "Answer","text": "Standard processing takes 5–7 business days, with express service available in about 2–3 business days."}
+      },{
+        "@type": "Question",
+        "name": "What documents are required?",
+        "acceptedAnswer": {"@type": "Answer","text": "Valid passport, passport photo, travel itinerary, and proof of accommodation. Requirements vary by visa type."}
+      },{
+        "@type": "Question",
+        "name": "Can you help with airport pickup and hotels?",
+        "acceptedAnswer": {"@type": "Answer","text": "Yes. We arrange airport transfers and provide curated hotel options in Kigali and beyond."}
+      }]
+    }
+    </script>
+
     <!-- Footer -->
     <footer id="contact">
         <div class="container">
@@ -668,16 +876,16 @@
                 </div>
                 <div class="footer-section">
                     <h3>Support</h3>
-                    <a href="#contact">Contact Us</a>
+                    <a href="mailto:jenzzly@gmail.com">Contact Us</a>
                     <a href="#faq">FAQ</a>
-                    <a href="#guides">Travel Guides</a>
+                    <a href="#blog">Travel Guides</a>
                     <a href="#blog">Blog</a>
-                    <a href="#status">Application Status</a>
+                    <a href="https://wa.me/250782388933" target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
                 </div>
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <p>📧 jenzzly@gmail.com</p>
-                    <p>📱 WhatsApp: +250 782388933</p>
+                    <p>📧 <a href="mailto:jenzzly@gmail.com">jenzzly@gmail.com</a></p>
+                    <p>📱 <a href="https://wa.me/250782388933" target="_blank" rel="noopener noreferrer">WhatsApp: +250 782388933</a></p>
                     <p>🕒 Mon-Fri: 8AM-6PM EAT</p>
                     <p>📍 Kigali, Rwanda</p>
                 </div>
@@ -689,7 +897,7 @@
     </footer>
 
     <!-- WhatsApp FAB -->
-    <a href="https://wa.me/250782388933" class="fab" title="Chat on WhatsApp">
+    <a href="https://wa.me/250782388933" class="fab" title="Chat on WhatsApp" target="_blank" rel="noopener noreferrer">
         📱
     </a>
 
@@ -720,30 +928,16 @@
             }
         });
 
-        // Simple form validation placeholder
-        function validateForm(formData) {
-            // Add form validation logic here
-            console.log('Form submitted:', formData);
-        }
-
-        // CTA button click handlers
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                if (this.textContent.includes('Apply for Rwanda Visa')) {
-                    // Redirect to visa application form
-                    console.log('Redirecting to visa application...');
-                } else if (this.textContent.includes('Search Hotels')) {
-                    // Redirect to Booking.com affiliate link
-                    console.log('Redirecting to hotel search...');
-                } else if (this.textContent.includes('Explore Tours')) {
-                    // Redirect to tours page
-                    console.log('Redirecting to tours...');
-                } else if (this.textContent.includes('Get Covered')) {
-                    // Redirect to insurance providers
-                    console.log('Redirecting to insurance...');
-                }
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (navToggle && navLinks) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = navLinks.getAttribute('data-open') === 'true';
+                navLinks.setAttribute('data-open', String(!isOpen));
+                navToggle.setAttribute('aria-expanded', String(!isOpen));
             });
-        });
+        }
     </script>
 </body>
 </html>
