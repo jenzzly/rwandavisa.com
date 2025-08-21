@@ -439,6 +439,54 @@
             z-index: 1100;
         }
 
+        /* Disclaimer Modal */
+        .disclaimer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1100;
+        }
+        .disclaimer-overlay[aria-hidden="false"] { display: flex; }
+        .disclaimer-modal {
+            background: #ffffff;
+            color: #0f172a;
+            width: 100%;
+            max-width: 720px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            padding: 1.5rem;
+            position: relative;
+        }
+        .disclaimer-modal h3 { color: #1e40af; margin-bottom: .5rem; }
+        .disclaimer-modal p { color: #475569; }
+        .disclaimer-actions { display: flex; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; }
+        .button-ghost {
+            display: inline-block;
+            background: transparent;
+            color: #1e40af;
+            padding: .9rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid #1e40af;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all .2s;
+        }
+        .button-ghost:hover { background: #1e40af; color: #fff; }
+        .disclaimer-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #334155;
+        }
+
         /* Dark mode (modern look & better accessibility) */
         @media (prefers-color-scheme: dark) {
             body { color: #e5e7eb; background: #0b1220; }
@@ -452,6 +500,9 @@
             .quick-link:hover { background: #1e40af; color: #fff; }
             footer { background: #0b1220; }
             .footer-bottom { border-top-color: #1f2937; color: #9ca3af; }
+            .disclaimer-modal { background: #0f172a; color: #e5e7eb; }
+            .disclaimer-modal p { color: #94a3b8; }
+            .disclaimer-close { color: #cbd5e1; }
         }
     </style>
     
@@ -502,13 +553,13 @@
       "offers": [{
         "@type": "Offer",
         "name": "Standard eVisa Support",
-        "price": "25",
+        "price": "100",
         "priceCurrency": "USD",
         "url": "https://rwandavisa.com/#visa"
       },{
         "@type": "Offer",
         "name": "Express Visa Service",
-        "price": "50",
+        "price": "150",
         "priceCurrency": "USD",
         "url": "https://rwandavisa.com/#visa"
       }]
@@ -892,6 +943,9 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 RwandaVisa.com. All rights reserved. | Privacy Policy | Terms of Service</p>
+                <p style="margin-top:.5rem;font-size:.95rem;color:#9ca3af;">
+                    Disclaimer: RwandaVisa.com is an independent third‑party support company. We provide guidance and assistance for visa and related services. We are not affiliated with, endorsed by, or partnered with the Government of Rwanda or any government agency. Government fees (if applicable) are separate from our service fees.
+                </p>
             </div>
         </div>
     </footer>
@@ -900,6 +954,22 @@
     <a href="https://wa.me/250782388933" class="fab" title="Chat on WhatsApp" target="_blank" rel="noopener noreferrer">
         📱
     </a>
+
+    <!-- Disclaimer Modal -->
+    <div class="disclaimer-overlay" id="disclaimer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="disclaimer-title" aria-describedby="disclaimer-desc">
+        <div class="disclaimer-modal">
+            <button class="disclaimer-close" aria-label="Close disclaimer" id="disclaimer-close">×</button>
+            <h3 id="disclaimer-title">Important Disclaimer</h3>
+            <p id="disclaimer-desc" style="margin-top:.5rem;">
+                RwandaVisa.com is an independent third‑party support company. We provide guidance and assistance for visa and related services. We are not affiliated with, endorsed by, or partnered with the Government of Rwanda or any government agency. Government fees (if applicable) are separate from our service fees.
+            </p>
+            <div class="disclaimer-actions">
+                <button class="cta-button" id="disclaimer-accept">I Understand</button>
+                <a class="button-ghost" href="https://wa.me/250782388933" target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
+                <a class="button-ghost" href="mailto:jenzzly@gmail.com">Email Us</a>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Smooth scrolling for navigation links
@@ -938,6 +1008,36 @@
                 navToggle.setAttribute('aria-expanded', String(!isOpen));
             });
         }
+
+        // Disclaimer modal logic
+        (function() {
+            const overlay = document.getElementById('disclaimer');
+            const accept = document.getElementById('disclaimer-accept');
+            const closeBtn = document.getElementById('disclaimer-close');
+            if (!overlay || !accept || !closeBtn) return;
+
+            const open = () => {
+                overlay.setAttribute('aria-hidden', 'false');
+                accept.focus();
+            };
+            const close = () => {
+                overlay.setAttribute('aria-hidden', 'true');
+            };
+
+            // Always show on every visit after short delay
+            window.setTimeout(open, 400);
+
+            accept.addEventListener('click', () => {
+                close();
+            });
+            closeBtn.addEventListener('click', close);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) close();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') close();
+            });
+        })();
     </script>
 </body>
 </html>
