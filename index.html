@@ -586,7 +586,7 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
+
             .nav-links {
                 display: none;
                 position: absolute;
@@ -603,7 +603,7 @@
             }
             .nav-links[data-open="true"] { display: flex; }
             .nav-toggle { display: inline-block; }
-            
+
             .services-grid,
             .affiliate-grid {
                 grid-template-columns: 1fr;
@@ -716,32 +716,34 @@
             .disclaimer-modal { background: #0f172a; color: #e5e7eb; }
             .disclaimer-modal p { color: #94a3b8; }
             .disclaimer-close { color: #cbd5e1; }
-            
+
             .ai-chat-container {
                 background: #0f172a;
                 color: #e5e7eb;
             }
-            
+
             .ai-message.bot {
                 background: #1e293b;
                 color: #e5e7eb;
             }
-            
+
             .ai-chat-input input {
                 background: #1e293b;
                 color: #e5e7eb;
                 border-color: #334155;
             }
-            
+
             .ai-typing-indicator {
                 background: #1e293b;
             }
-            
+
             .ai-typing-dot {
                 background: #94a3b8;
             }
         }
     </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8770614237621568"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
@@ -831,7 +833,7 @@
                         <li>5-7 business days processing</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card">
                     <h3>⚡ Express Rwanda Visa Service</h3>
                     <div class="price-tag">Contact for Pricing</div>
@@ -844,7 +846,7 @@
                         <li>2-3 business days processing</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card">
                     <h3>🌟 Full Concierge Package</h3>
                     <div class="price-tag">Contact for Pricing</div>
@@ -878,7 +880,7 @@
                         <li>Follow-up support</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card">
                     <h3>💼 Business Registration</h3>
                     <div class="price-tag">Contact for Quote</div>
@@ -890,7 +892,7 @@
                         <li>Legal compliance</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card">
                     <h3>🏦 Banking Support</h3>
                     <div class="price-tag">Contact for Quote</div>
@@ -916,13 +918,13 @@
                     <p>Find and book the perfect accommodation in Rwanda with our hotel search powered by Booking.com</p>
                     <a href="#hotels" class="cta-button">Search Hotels</a>
                 </div>
-                
+
                 <div class="affiliate-box" id="tours">
                     <h3>🦍 Book Tours</h3>
                     <p>Discover Rwanda's incredible wildlife and culture with our curated tour packages</p>
                     <a href="#tours" class="cta-button">Explore Tours</a>
                 </div>
-                
+
                 <div class="affiliate-box" id="insurance">
                     <h3>🛡️ Travel Insurance</h3>
                     <p>Protect your journey with comprehensive travel insurance from trusted providers</p>
@@ -948,7 +950,7 @@
                         <li>Multiple vehicle options</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card">
                     <h3>🚗 Car Rentals</h3>
                     <div class="price-tag">Affiliate Partners</div>
@@ -960,7 +962,7 @@
                         <li>Competitive pricing</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card">
                     <h3>🏍️ Local Transport</h3>
                     <div class="price-tag">Guide & Links</div>
@@ -1243,9 +1245,9 @@
             const chatMessages = document.getElementById('aiChatMessages');
             const chatInput = document.getElementById('aiChatInput');
             const chatSend = document.getElementById('aiChatSend');
-            
+
             let isOpen = false;
-            
+
             // Toggle chat window
             assistantButton.addEventListener('click', () => {
                 isOpen = !isOpen;
@@ -1254,55 +1256,55 @@
                     chatInput.focus();
                 }
             });
-            
+
             // Close chat window
             chatClose.addEventListener('click', () => {
                 isOpen = false;
                 chatContainer.classList.remove('open');
             });
-            
+
             // Send message function
             const sendMessage = async () => {
                 const message = chatInput.value.trim();
                 if (!message) return;
-                
+
                 // Add user message to chat
                 addMessage(message, 'user');
                 chatInput.value = '';
-                
+
                 // Show typing indicator
                 showTypingIndicator();
-                
+
                 try {
                     // Try to call your backend API first
                     const response = await callBackendAPI(message);
-                    
+
                     // Remove typing indicator
                     removeTypingIndicator();
-                    
+
                     // Add bot response to chat
                     addMessage(response, 'bot');
                 } catch (error) {
                     // Remove typing indicator
                     removeTypingIndicator();
-                    
+
                     // Fall back to rule-based responses
                     const fallbackResponse = getMockResponse(message);
                     addMessage(fallbackResponse, 'bot');
                     console.log("Using fallback response due to API error:", error);
                 }
             };
-            
+
             // Send message on button click
             chatSend.addEventListener('click', sendMessage);
-            
+
             // Send message on Enter key
             chatInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     sendMessage();
                 }
             });
-            
+
             // Add message to chat
             function addMessage(text, sender) {
                 const messageElement = document.createElement('div');
@@ -1311,7 +1313,7 @@
                 chatMessages.appendChild(messageElement);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-            
+
             // Show typing indicator
             function showTypingIndicator() {
                 const typingElement = document.createElement('div');
@@ -1325,7 +1327,7 @@
                 chatMessages.appendChild(typingElement);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-            
+
             // Remove typing indicator
             function removeTypingIndicator() {
                 const typingElement = document.getElementById('aiTypingIndicator');
@@ -1333,23 +1335,27 @@
                     typingElement.remove();
                 }
             }
-            
+
             // Call backend API
             async function callBackendAPI(message) {
-                const response = await fetch("https://rwanda-ai-backend.onrender.com/ask", {
+
+                // http://0.0.0.0:8000
+                //https://rwanda-ai-backend.onrender.com/
+
+                const response = await fetch("http://0.0.0.0:8000/ask", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ text: message }),
                     timeout: 10000 // 10 second timeout
                 });
-                
+
                 if (!response.ok) {
                     console.log("API error: " + response.status);
                     throw new Error(`API error: ${response.status}`);
                 }
-                
+
                 const data = await response.json();
-                
+
                 // Handle different response formats
                 if (data.reply) {
                     return data.reply;
@@ -1359,69 +1365,69 @@
                     throw new Error("Unexpected response format");
                 }
             }
-            
+
             // Enhanced rule-based responses
             function getMockResponse(message) {
                 const lowerMessage = message.toLowerCase();
-                
+
                 // Visa-related queries
                 if (lowerMessage.includes('visa') || lowerMessage.includes('entry') || lowerMessage.includes('passport')) {
                     if (lowerMessage.includes('requirement') || lowerMessage.includes('need') || lowerMessage.includes('document')) {
                         return "🛂 For a Rwanda visa, you typically need:\n\n• Valid passport (6+ months validity)\n• Completed application form\n• Passport photo\n• Proof of accommodation\n• Return flight ticket\n• Payment for visa fee\n\nSpecific requirements vary by visa type. Would you like details for tourist, business, or East African visa?";
                     }
-                    
+
                     if (lowerMessage.includes('fee') || lowerMessage.includes('cost') || lowerMessage.includes('price')) {
                         return "💰 Rwanda visa fees:\n\n• Tourist visa (30 days): $50\n• East African Tourist Visa (90 days): $100\n• Conference visa: $50\n• Business visas: Various pricing\n\nAll fees are non-refundable. Need help with a specific visa type?";
                     }
-                    
+
                     if (lowerMessage.includes('process') || lowerMessage.includes('time') || lowerMessage.includes('long')) {
                         return "⏱️ Processing times:\n\n• Standard: 5-7 business days\n• Express: 2-3 business days\n\nWe recommend applying at least 2 weeks before travel. Need assistance with your application?";
                     }
-                    
+
                     return "🛂 I can help with Rwanda visa information! Our website offers detailed guides on tourist visas, business visas, East African visas, and requirements. Message us on WhatsApp for personalized assistance.";
                 }
-                
+
                 // Hotel-related queries
                 if (lowerMessage.includes('hotel') || lowerMessage.includes('accommodation') || lowerMessage.includes('stay')) {
                     if (lowerMessage.includes('kigali')) {
                         return "🏨 In Kigali, popular areas include:\n\n• Kimihurura (business district)\n• Kiyovu (upscale residential)\n• Nyarutarama (modern area)\n\nOptions range from $30-50/night (budget) to $150+/night (luxury). We can help you book based on your preferences!";
                     }
-                    
+
                     return "🏨 Rwanda offers great accommodation options from luxury hotels to budget guesthouses. Popular platforms include Booking.com and Airbnb. Need recommendations based on your itinerary?";
                 }
-                
+
                 // Tour-related queries
                 if (lowerMessage.includes('tour') || lowerMessage.includes('gorilla') || lowerMessage.includes('safari')) {
                     if (lowerMessage.includes('gorilla') || lowerMessage.includes('trekking')) {
                         return "🦍 Gorilla trekking in Volcanoes National Park:\n\n• Permit cost: $1500 for foreigners\n• Book months in advance\n• Best seasons: June-Sept, Dec-Feb\n• Physical fitness required\n\nWe can assist with permits and tour arrangements!";
                     }
-                    
+
                     return "🌟 Popular Rwanda tours:\n\n• Gorilla trekking (Volcanoes NP)\n• Wildlife safari (Akagera NP)\n• Chimpanzee tracking (Nyungwe Forest)\n• Cultural experiences (Kigali)\n\nNeed help planning your itinerary?";
                 }
-                
+
                 // Transportation queries
                 if (lowerMessage.includes('transport') || lowerMessage.includes('car') || lowerMessage.includes('airport')) {
                     return "🚗 Transport options in Rwanda:\n\n• Airport transfers: $25-40 to Kigali\n• Car rental: $50-100/day with driver\n• Motorcycle taxis: Safe & regulated\n• Ride apps: Yego, Pascal\n• Public buses: Between cities\n\nNeed specific transportation help?";
                 }
-                
+
                 // General Rwanda queries
                 if (lowerMessage.includes('rwanda') || lowerMessage.includes('visit') || lowerMessage.includes('travel')) {
                     if (lowerMessage.includes('best time') || lowerMessage.includes('when')) {
                         return "🌤️ Best time to visit Rwanda:\n\n• Dry seasons: Dec-Feb & June-Sept\n• Better wildlife viewing\n• Easier trekking conditions\n• Gorilla trekking possible year-round\n\nWhat activities are you planning?";
                     }
-                    
+
                     if (lowerMessage.includes('safe') || lowerMessage.includes('security')) {
                         return "🛡️ Rwanda is one of Africa's safest countries:\n\n• Very low crime rates\n• Clean & well-organized\n• English widely spoken\n• Easy to navigate\n\nNormal travel precautions apply. Any specific safety concerns?";
                     }
-                    
+
                     return "🇷🇼 Rwanda - 'Land of a Thousand Hills' offers:\n\n• Mountain gorillas\n• Wildlife safaris\n• Pristine forests\n• Vibrant culture\n• Clean & safe environment\n\nWhat would you like to know specifically?";
                 }
-                
+
                 // Greetings
                 if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
                     return "Hello! 👋 Welcome to Rwanda travel assistance. I can help you with:\n\n• Visa requirements & applications\n• Hotel recommendations\n• Tour planning\n• Transportation options\n\nWhat would you like to know about Rwanda?";
                 }
-                
+
                 // Default response
                 return "I'm here to help with Rwanda travel! Ask me about:\n\n• Visa requirements & fees\n• Hotels & accommodation\n• Tours & activities\n• Transportation\n• General travel info\n\nFor immediate assistance, message us on WhatsApp! 📱";
             }
