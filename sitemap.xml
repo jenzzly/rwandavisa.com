@@ -2,8 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rwandavisa.com/</loc>
-    <lastmod>2025-08-19</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-01-24</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://rwandavisa.com/rwanda-visa-requirements-guide.html</loc>
+    <lastmod>2025-01-24</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rwandavisa.com/gorilla-trekking-rwanda-guide.html</loc>
+    <lastmod>2025-01-24</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rwandavisa.com/living-in-rwanda-expat-guide.html</loc>
+    <lastmod>2025-01-24</lastmod>
+    <priority>0.9</priority>
   </url>
 </urlset>
