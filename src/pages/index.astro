@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="RwandaVisa — Redefining Rwanda Travel">
+  <Header />
+  
+  <!-- Hero with Map -->
+  <section id="hero">
+    <div id="rwandaMap" style="height: 100vh; width: 100%;"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-bottom-fade"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Land of a Thousand Hills · East Africa</p>
+      <h1 class="hero-title">With you at<br>every <em>horizon</em></h1>
+      <p class="hero-sub">We manage your Rwanda journey end to end — gorilla treks, visa services, safaris, and cultural immersions handled with care so you can focus on what matters.</p>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('destinations')?.scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- Ad Top -->
+  <div class="ad-row">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8770614237621568"
+      data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Intro -->
+  <section id="intro" style="padding:9rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:end">
+    <div class="intro-left reveal">
+      <span class="intro-tag" style="display:inline-flex;align-items:center;gap:.5rem;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,.3);padding:.4rem 1rem;border-radius:100px;margin-bottom:2rem">🇷🇼 Rwanda Travel & Visa</span>
+      <h2 class="s-heading">We make<br><em>complex travel</em><br>simple</h2>
+    </div>
+    <div class="intro-right reveal d2">
+      <p>Rwanda is not just a destination — it is a revelation. Africa's most meticulously maintained country combines world-class gorilla conservation, dramatic highland landscapes, and a capital city that surprises every visitor with its modernity and calm.</p>
+      <p style="margin-top:1.2rem">We don't just arrange flights and visas. We manage the entire journey — before, during, and after travel — anticipating your needs, resolving issues proactively, and ensuring every moment in the Land of a Thousand Hills unfolds exactly as imagined.</p>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap" style="overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.2rem 0;background:var(--bg2)">
+    <div class="marquee-track" style="display:flex;gap:3rem;width:max-content;animation:marquee 28s linear infinite">
+      <div class="marquee-item" style="font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--ink3);white-space:nowrap;display:flex;align-items:center;gap:1.5rem">Gorilla Trekking<div class="marquee-dot" style="width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:.5"></div></div>
+      <div class="marquee-item">Volcanoes National Park<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Kigali City Tours<div class="marquee-dot"></div></div>
+      <div class="marquee-item">E-Visa Services<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Akagera Safari<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Lake Kivu Escapes<div class="marquee-dot"></div></div>
+      <div class="marquee-item">AI Itinerary Planner<div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
+  <!-- Destinations Section -->
+  <section id="destinations">
+    <div class="dest-intro">
+      <span class="s-label reveal">Explore Rwanda</span>
+      <h2 class="s-heading reveal d1">Travel designed<br><em>around you</em></h2>
+      <p class="s-body reveal d2">Six extraordinary destinations, each with its own character. Zoom in on any region to begin planning your Rwanda story.</p>
+    </div>
+    <div class="dest-list">
+      <!-- Kigali -->
+      <div class="dest-row">
+        <div class="dest-img-side reveal-left">
+          <img src="/images/kigali_city_view_1763982611089.png" alt="Kigali city skyline" loading="lazy">
+        </div>
+        <div class="dest-text-side">
+          <div class="dest-num reveal">01</div>
+          <div class="dest-tag-pill reveal d1">Capital City</div>
+          <h3 class="dest-name reveal d1">Kigali</h3>
+          <p class="dest-desc reveal d2">Africa's cleanest city blends vibrant culture, world-class cuisine, and a deeply moving history.</p>
+          <a href="/destinations/kigali" class="dest-link reveal d3">Explore Kigali</a>
+        </div>
+      </div>
+      
+      <!-- Musanze -->
+      <div class="dest-row reverse">
+        <div class="dest-img-side reveal-right">
+          <img src="/images/rwanda_gorilla_nature_1763982585054.png" alt="Mountain gorilla in Volcanoes National Park" loading="lazy">
+        </div>
+        <div class="dest-text-side">
+          <div class="dest-num reveal">02</div>
+          <div class="dest-tag-pill reveal d1">Gorilla Trekking</div>
+          <h3 class="dest-name reveal d1">Musanze</h3>
+          <p class="dest-desc reveal d2">Gateway to Volcanoes National Park. Home to Rwanda's iconic mountain gorillas and five ancient volcanoes.</p>
+          <a href="/destinations/musanze" class="dest-link reveal d3">Explore Musanze</a>
+        </div>
+      </div>
+      
+      <!-- Gisenyi -->
+      <div class="dest-row">
+        <div class="dest-img-side reveal-left">
+          <img src="/images/rwanda_landscape_hero_1763982560164.png" alt="Lake Kivu at sunset" loading="lazy">
+        </div>
+        <div class="dest-text-side">
+          <div class="dest-num reveal">03</div>
+          <div class="dest-tag-pill reveal d1">Lake Kivu</div>
+          <h3 class="dest-name reveal d1">Gisenyi</h3>
+          <p class="dest-desc reveal d2">Rwanda's lakeside escape. White-sand beaches along Lake Kivu, kayaking at sunrise, and fresh tilapia dinners.</p>
+          <a href="/destinations/gisenyi" class="dest-link reveal d3">Explore Gisenyi</a>
+        </div>
+      </div>
+      
+      <!-- Akagera -->
+      <div class="dest-row reverse">
+        <div class="dest-img-side reveal-right">
+          <img src="/images/visa_application_desk_1763983510721.png" alt="Akagera National Park safari" loading="lazy">
+        </div>
+        <div class="dest-text-side">
+          <div class="dest-num reveal">04</div>
+          <div class="dest-tag-pill reveal d1">Big Five Safari</div>
+          <h3 class="dest-name reveal d1">Akagera</h3>
+          <p class="dest-desc reveal d2">Rwanda's great conservation comeback. Lions, rhinos, elephants — all Big Five against savannah and lakes.</p>
+          <a href="/destinations/akagera" class="dest-link reveal d3">Explore Akagera</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-cell reveal"><div class="stat-num">1,500<span style="font-size:.5em">+</span></div><div class="stat-label">Species of birds & wildlife</div></div>
+      <div class="stat-cell reveal d1"><div class="stat-num">$1,500</div><div class="stat-label">Gorilla permit — worth every cent</div></div>
+      <div class="stat-cell reveal d2"><div class="stat-num">72hr</div><div class="stat-label">Average e-visa approval time</div></div>
+      <div class="stat-cell reveal d3"><div class="stat-num">#1</div><div class="stat-label">Cleanest city in Africa — Kigali</div></div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <span class="s-label reveal">What we offer</span>
+    <h2 class="s-heading reveal d1">Beyond the reach<br>of <em>ordinary travel</em></h2>
+    <div class="svc-grid">
+      <a href="/visa" class="svc-cell reveal">
+        <div class="svc-icon">🛂</div>
+        <div class="svc-title">Visa Services</div>
+        <p class="svc-desc">Step-by-step guidance on Rwanda's e-visa for every nationality and travel purpose.</p>
+        <span class="svc-arrow">Learn more →</span>
+      </a>
+      <a href="/itinerary" class="svc-cell reveal d1">
+        <div class="svc-icon">✦</div>
+        <div class="svc-title">AI Itinerary Planner</div>
+        <p class="svc-desc">Describe your dream trip — our AI builds a personalized day-by-day Rwanda itinerary.</p>
+        <span class="svc-arrow">Plan your trip →</span>
+      </a>
+      <a href="/tours" class="svc-cell reveal d2">
+        <div class="svc-icon">🦍</div>
+        <div class="svc-title">Tours & Experiences</div>
+        <p class="svc-desc">Curated gorilla treks, Akagera safaris, Kigali city tours, and cultural immersions.</p>
+        <span class="svc-arrow">Browse tours →</span>
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+
+  <script>
+    // Leaflet Map Initialization
+    const map = L.map('rwandaMap').setView([-1.9441, 29.8739], 8);
+    
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
+      maxZoom: 13
+    }).addTo(map);
+    
+    const cities = [
+      { name: "Kigali", coords: [-1.9441, 30.0619], url: "/destinations/kigali", zoom: 12 },
+      { name: "Musanze", coords: [-1.4989, 29.6347], url: "/destinations/musanze", zoom: 12 },
+      { name: "Gisenyi", coords: [-1.7023, 29.2564], url: "/destinations/gisenyi", zoom: 12 },
+      { name: "Huye", coords: [-2.6008, 29.7409], url: "/destinations/huye", zoom: 12 },
+      { name: "Karongi", coords: [-2.0149, 29.343], url: "/destinations/karongi", zoom: 11 },
+      { name: "Rusizi", coords: [-2.4869, 28.8487], url: "/destinations/rusizi", zoom: 11 },
+      { name: "Akagera", coords: [-1.9000, 30.7853], url: "/destinations/akagera", zoom: 10 }
+    ];
+    
+    cities.forEach(city => {
+      const marker = L.marker(city.coords).addTo(map);
+      marker.bindPopup(`
+        <strong style="color: #c9a96e;">${city.name}</strong><br>
+        <a href="${city.url}" style="color: #c9a96e; font-size: 12px;">Explore →</a>
+      `);
+    });
+    
+    setTimeout(() => {
+      map.flyTo([-1.9441, 30.0619], 9, { duration: 1.5 });
+    }, 500);
+    
+    // Marquee animation
+    const style = document.createElement('style');
+    style.textContent = `@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`;
+    document.head.appendChild(style);
+  </script>
+</Layout>

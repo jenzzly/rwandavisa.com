@@ -1,0 +1,60 @@
+---
+// Interactive Leaflet Map component
+---
+
+<section id="hero">
+  <div id="rwandaMap" style="height: 100%; width: 100%;"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-bottom-fade"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Land of a Thousand Hills · East Africa</p>
+    <h1 class="hero-title">With you at<br>every <em>horizon</em></h1>
+    <p class="hero-sub">We manage your Rwanda journey end to end — gorilla treks, visa services, safaris, and cultural immersions handled with care so you can focus on what matters.</p>
+  </div>
+  <div class="hero-scroll" id="heroScroll" onclick="document.getElementById('destinations')?.scrollIntoView({behavior:'smooth'})">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<script>
+  (function() {
+    // Initialize Leaflet map
+    const map = L.map('rwandaMap').setView([-1.9441, 29.8739], 8);
+    
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
+      maxZoom: 13
+    }).addTo(map);
+    
+    const cities = [
+      { name: "Kigali", coords: [-1.9441, 30.0619], desc: "Capital of innovation, vibrant nightlife", url: "/destinations/kigali", zoom: 12 },
+      { name: "Musanze", coords: [-1.4989, 29.6347], desc: "Gateway to Volcanoes NP & gorilla trekking", url: "/destinations/musanze", zoom: 12 },
+      { name: "Gisenyi", coords: [-1.7023, 29.2564], desc: "Lake Kivu beaches & stunning sunsets", url: "/destinations/gisenyi", zoom: 12 },
+      { name: "Huye", coords: [-2.6008, 29.7409], desc: "National Museum & cultural heartbeat", url: "/destinations/huye", zoom: 12 },
+      { name: "Karongi", coords: [-2.0149, 29.343], desc: "Blue lake inlets & peace island", url: "/destinations/karongi", zoom: 11 },
+      { name: "Rusizi", coords: [-2.4869, 28.8487], desc: "Tropical lowland & Nyungwe forest gateway", url: "/destinations/rusizi", zoom: 11 },
+      { name: "Akagera", coords: [-1.9000, 30.7853], desc: "Savannah game drive, lions & elephants", url: "/destinations/akagera", zoom: 10 }
+    ];
+    
+    cities.forEach(city => {
+      const marker = L.marker(city.coords).addTo(map);
+      marker.bindPopup(`
+        <div style="font-family: 'Inter', sans-serif; padding: 4px;">
+          <strong style="color: #c9a96e;">${city.name}</strong><br>
+          <small>${city.desc}</small><br>
+          <a href="${city.url}" style="color: #c9a96e; font-size: 12px;">Explore →</a>
+        </div>
+      `);
+    });
+    
+    // Initial fly to animation
+    setTimeout(() => {
+      map.flyTo([-1.9441, 30.0619], 9, { duration: 1.5 });
+    }, 500);
+    
+    // Expose map globally for popup interactions
+    window.rwandaMap = map;
+  })();
+</script>
