@@ -4,7 +4,7 @@ export interface Props {
   title: string;
   description?: string;
 }
-
+import '../styles/global.css';
 const { title, description = "Rwanda travel and visa services — gorilla trekking, tours, and expert guidance" } = Astro.props;
 ---
 
@@ -24,9 +24,6 @@ const { title, description = "Rwanda travel and visa services — gorilla trekki
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  
-  <!-- Global Styles -->
-  <link rel="stylesheet" href="/src/styles/global.css">
   
   <!-- AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8770614237621568" crossorigin="anonymous"></script>
