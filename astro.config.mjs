@@ -4,5 +4,11 @@ export default defineConfig({
   site: 'https://jenzzly.github.io',
   base: '',
   output: 'static',
-  trailingSlash: 'always'
+  trailingSlash: 'always',
+  integrations: [],
+  vite: {
+    ssr: {
+      noExternal: ['leaflet', 'leaflet-routing-machine']
+    }
+  }
 });
