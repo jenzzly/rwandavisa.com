@@ -7,27 +7,33 @@ import Footer from '../../components/Footer.astro';
 <Layout title="Kigali - Rwanda's Vibrant Capital City">
   <Header />
   
-  <div style="padding-top: 120px;" class="s">
-    <div class="s-narrow" style="margin: 0 auto;">
-      <span class="s-label">Capital City</span>
-      <h1 class="s-heading">Kigali<br><em>Where Africa Shines</em></h1>
-      <div style="margin: 2rem 0;">
-        <img src="/images/kigali_city_view_1763982611088.png" alt="Kigali cityscape" style="width:100%; border-radius: 8px;">
+  <div style="padding-top: 120px;" class="destination-page">
+    <div class="destination-container">
+      <span class="destination-label">Capital City</span>
+      <h1 class="destination-title">Kigali<br><em>Where Africa Shines</em></h1>
+      <div class="destination-image">
+        <img src="/images/kigali_city_view_1763982611089.png" alt="Kigali cityscape">
       </div>
-      <div class="s-body" style="max-width: 100%;">
+      <div class="destination-content">
         <p>Kigali is Africa's cleanest and most modern capital — a city of surprising beauty, extraordinary hospitality, and deep meaning. From the moving Kigali Genocide Memorial to the vibrant Inema Arts Centre and an exploding culinary scene, Kigali demands time beyond a simple transit stop.</p>
-        <h3 style="margin-top: 2rem; color: var(--gold);">Why Visit Kigali</h3>
-        <ul style="margin-top: 1rem; list-style-position: inside;">
+        
+        <h3>Why Visit Kigali</h3>
+        <ul>
           <li>🏛️ Kigali Genocide Memorial — one of Africa's most essential museums</li>
           <li>🎨 Inema Arts Centre & Niyo Arts Gallery — contemporary Rwandan creativity</li>
           <li>🍽️ World-class dining at Meza Malonga, The Hut, and Filini</li>
           <li>🛍️ Kimironko Market — authentic local shopping experience</li>
           <li>🌃 Nightlife in Kiyovu and Kimihurura neighborhoods</li>
+          <li>🏔️ Mount Kigali — panoramic city views</li>
         </ul>
-        <div class="info-box" style="background: var(--bg2); padding: 2rem; margin-top: 2rem; border-left: 3px solid var(--gold);">
-          <h4 style="color: var(--gold);">Visa Information</h4>
+        
+        <h3>Best Time to Visit</h3>
+        <p>Kigali enjoys a pleasant climate year-round. The dry seasons (June-September and December-February) offer the best weather for city exploration. However, Kigali's modern infrastructure makes it enjoyable even during the rainy season.</p>
+        
+        <div class="info-box">
+          <h4>Visa Information</h4>
           <p>Kigali International Airport (KGL) offers e-visa arrivals for most nationalities. Apply online at 
-          <a href="/visa" style="color: var(--gold);">irembo.gov.rw</a> or let us handle the process for you.</p>
+          <a href="/visa">irembo.gov.rw</a> or let us handle the process for you.</p>
         </div>
       </div>
     </div>
@@ -35,3 +41,84 @@ import Footer from '../../components/Footer.astro';
   
   <Footer />
 </Layout>
+
+<style>
+  .destination-page {
+    padding: 6rem 2rem;
+    background: var(--bg);
+  }
+  .destination-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .destination-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .destination-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+  .destination-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .destination-image {
+    margin: 2rem 0;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .destination-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .destination-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--ink-light);
+  }
+  .destination-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  .destination-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .destination-content li {
+    margin-bottom: 0.5rem;
+  }
+  .info-box {
+    background: var(--bg-off);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-radius: 12px;
+    border-left: 3px solid var(--gold);
+  }
+  .info-box h4 {
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .info-box a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+  @media (max-width: 768px) {
+    .destination-page {
+      padding: 5rem 1rem;
+    }
+  }
+</style>

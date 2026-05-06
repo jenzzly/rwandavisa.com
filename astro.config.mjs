@@ -2,9 +2,9 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://jenzzly.github.io',
-  base: '',
+  base: '/',
   output: 'static',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   integrations: [],
   vite: {
     ssr: {
