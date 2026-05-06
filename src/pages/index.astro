@@ -353,15 +353,53 @@ import Footer from '../components/Footer.astro';
 
   <Footer />
 
-  <!-- Leaflet Map with Routing -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-  
+  <!-- Load Leaflet and Routing Machine in correct order -->
   <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
+    // Function to load scripts in sequence
+    function loadScript(src, callback) {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = callback;
+      script.onerror = () => console.error(`Failed to load script: ${src}`);
+      document.head.appendChild(script);
+    }
+
+    // Load Leaflet CSS
+    const leafletCSS = document.createElement('link');
+    leafletCSS.rel = 'stylesheet';
+    leafletCSS.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(leafletCSS);
+
+    const routingCSS = document.createElement('link');
+    routingCSS.rel = 'stylesheet';
+    routingCSS.href = 'https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css';
+    document.head.appendChild(routingCSS);
+
+    // Load Leaflet first, then Routing Machine, then initialize map
+    loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', () => {
+      console.log('Leaflet loaded');
+      loadScript('https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js', () => {
+        console.log('Routing Machine loaded');
+        initializeMap();
+      });
+    });
+
+    function initializeMap() {
+      // Wait for DOM to be fully ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => initMap());
+      } else {
+        initMap();
+      }
+    }
+
+    function initMap() {
+      // Check if L is defined
+      if (typeof L === 'undefined') {
+        console.error('Leaflet (L) is not defined');
+        return;
+      }
+
       // Initialize the map
       const map = L.map('rwandaMap').setView([-1.9441, 29.8739], 7.5);
       
@@ -415,27 +453,34 @@ import Footer from '../components/Footer.astro';
       // Draw the route using Leaflet Routing Machine
       const waypointsLatLng = routeWaypoints.map(wp => L.latLng(wp.coords[0], wp.coords[1]));
       
-      const routingControl = L.Routing.control({
-        waypoints: waypointsLatLng,
-        routeWhileDragging: false,
-        show: false,
-        lineOptions: {
-          styles: [{ color: '#c9a96e', weight: 4, opacity: 0.85, dashArray: '8, 8' }],
-          extendToWaypoints: true,
-          missingRouteTolerance: 0
-        },
-        addWaypoints: false,
-        draggableWaypoints: false,
-        fitSelectedRoutes: false,
-        showAlternatives: false,
-        createMarker: function() { return null; }
-      }).addTo(map);
-      
-      // Hide the routing container
-      setTimeout(() => {
-        const container = document.querySelector('.leaflet-routing-container');
-        if (container) container.style.display = 'none';
-      }, 500);
+      try {
+        const routingControl = L.Routing.control({
+          waypoints: waypointsLatLng,
+          routeWhileDragging: false,
+          show: false,
+          lineOptions: {
+            styles: [{ color: '#c9a96e', weight: 4, opacity: 0.85, dashArray: '8, 8' }],
+            extendToWaypoints: true,
+            missingRouteTolerance: 0
+          },
+          addWaypoints: false,
+          draggableWaypoints: false,
+          fitSelectedRoutes: false,
+          showAlternatives: false,
+          createMarker: function() { return null; }
+        }).addTo(map);
+        
+        // Hide the routing container
+        setTimeout(() => {
+          const container = document.querySelector('.leaflet-routing-container');
+          if (container) container.style.display = 'none';
+        }, 500);
+      } catch (err) {
+        console.warn('Routing machine error:', err);
+        // Fallback: just draw a polyline
+        const latlngs = routeWaypoints.map(wp => wp.coords);
+        const polyline = L.polyline(latlngs, { color: '#c9a96e', weight: 4, dashArray: '8, 8' }).addTo(map);
+      }
       
       // Fit map bounds to show all stops
       const bounds = L.latLngBounds(routeWaypoints.map(wp => wp.coords));
@@ -443,14 +488,8 @@ import Footer from '../components/Footer.astro';
       
       // Store map globally
       window.rwandaMap = map;
-      
-      // Add click handler
-      const mapContainer = document.getElementById('rwandaMap');
-      if (mapContainer) {
-        mapContainer.style.cursor = 'grab';
-      }
-    });
-    
+    }
+
     // AI Itinerary Generator
     const itineraries = {
       leisure: {
@@ -532,17 +571,27 @@ import Footer from '../components/Footer.astro';
       }
     };
     
-    document.getElementById('generateItineraryBtn')?.addEventListener('click', () => {
-      const purpose = document.getElementById('purposeSelect').value;
-      const style = document.getElementById('styleSelect').value;
-      const days = document.getElementById('daysCount').value;
-      
-      let itinerary = itineraries[purpose]?.[style] || itineraries.leisure.midrange;
-      itinerary = itinerary.replace(/Day (\d+)/g, '<strong style="color: #c9a96e;">Day $1</strong>');
-      itinerary = itinerary.replace(/\n/g, '<br>');
-      
-      document.getElementById('itineraryText').innerHTML = itinerary;
-      document.getElementById('aiResult').style.display = 'block';
+    // Wait for DOM to be ready before adding event listener
+    document.addEventListener('DOMContentLoaded', () => {
+      const generateBtn = document.getElementById('generateItineraryBtn');
+      if (generateBtn) {
+        generateBtn.addEventListener('click', () => {
+          const purpose = document.getElementById('purposeSelect').value;
+          const style = document.getElementById('styleSelect').value;
+          const days = document.getElementById('daysCount').value;
+          
+          let itinerary = itineraries[purpose]?.[style] || itineraries.leisure.midrange;
+          itinerary = itinerary.replace(/Day (\d+)/g, '<strong style="color: #c9a96e;">Day $1</strong>');
+          itinerary = itinerary.replace(/\n/g, '<br>');
+          
+          const itineraryText = document.getElementById('itineraryText');
+          const aiResult = document.getElementById('aiResult');
+          if (itineraryText && aiResult) {
+            itineraryText.innerHTML = itinerary;
+            aiResult.style.display = 'block';
+          }
+        });
+      }
     });
   </script>
   
@@ -550,6 +599,12 @@ import Footer from '../components/Footer.astro';
     /* Ensure map container has proper height */
     #rwandaMap {
       background: #e8e4d8;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
     }
     .leaflet-popup-content-wrapper {
       border-radius: 12px;
