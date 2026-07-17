@@ -2,121 +2,103 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+
+// This can be overridden in the deployment environment if the donation page changes.
+const supportUrl = import.meta.env.PUBLIC_SUPPORT_URL || 'https://www.paypal.com/donate/?business=4GVQD57J4EWE8&no_recurring=0&item_name=I+hope+i+was+able+to+help+with+your+questions+about+traveling+to+Rwanda&currency_code=USD';
 ---
 
-<Layout title="Contact Us - Rwanda Travel Experts">
+<Layout title="Support & Contact - Rwanda Visa" description="Support Rwanda Visa and request personal visa or travel assistance.">
   <Header />
-  
-  <section id="contact-hero" style="padding-top: 150px; background: var(--bg2);">
-    <div class="s">
-      <div class="s-narrow" style="margin: 0 auto; text-align: center;">
-        <span class="s-label">Get in Touch</span>
-        <h1 class="s-heading">We're here<br><em>to help</em></h1>
-        <p class="s-body" style="max-width: 700px; margin: 1.5rem auto 0;">Questions about visas, tours, or travel planning? Reach out to our team.</p>
+
+  <section class="s support-hero">
+    <div class="support-gate" id="supportGate">
+      <img class="support-mark" src="/brand/rwanda-visa-mark.png" alt="Rwanda Visa logo" />
+      <span class="s-label">Independent travel guidance</span>
+      <h1 class="s-heading">Support our work,<br><em>then get in touch.</em></h1>
+      <p class="support-copy">We receive many requests for individual visa and travel help. A small contribution helps keep our guides free and allows us to make time for personal questions.</p>
+
+      <div class="support-options" aria-label="Suggested support amounts">
+        <div class="support-option"><strong>$3</strong>A coffee</div>
+        <div class="support-option"><strong>$7</strong>A helpful reply</div>
+        <div class="support-option"><strong>$15</strong>Visa support</div>
       </div>
+
+      <a class="support-button" href={supportUrl} target="_blank" rel="noopener">Support Rwanda Visa ↗</a>
+      <p class="support-note">After contributing, return here to send your request. Thank you for helping us keep Rwanda travel information accessible.</p>
+      <button class="support-unlock" id="unlockContact" type="button">I’ve completed my donation — reveal support options</button>
     </div>
   </section>
 
-  <div class="ad-row">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8770614237621568"
-      data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-
-  <!-- Contact Info Grid -->
-  <section class="s">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-      <div class="reveal" style="text-align: center; background: var(--bg2); padding: 2rem; border-radius: 8px;">
-        <div style="font-size: 2.5rem; margin-bottom: 1rem;">📧</div>
-        <h3 style="color: var(--gold); margin-bottom: 0.5rem;">Email Us</h3>
-        <a href="mailto:byja1101@gmail.com" style="color: var(--ink2); text-decoration: none;">byja1101@gmail.com</a>
-        <p style="color: var(--ink3); margin-top: 0.5rem;">Response within 24 hours</p>
-      </div>
-      
-      <div class="reveal d1" style="text-align: center; background: var(--bg2); padding: 2rem; border-radius: 8px;">
-        <div style="font-size: 2.5rem; margin-bottom: 1rem;">💬</div>
-        <h3 style="color: var(--gold); margin-bottom: 0.5rem;">WhatsApp</h3>
-        <a href="https://wa.me/250782388933" style="color: var(--ink2); text-decoration: none;">+250 782 388 933</a>
-        <p style="color: var(--ink3); margin-top: 0.5rem;">Instant messaging support</p>
-      </div>
-      
-      <div class="reveal d2" style="text-align: center; background: var(--bg2); padding: 2rem; border-radius: 8px;">
-        <div style="font-size: 2.5rem; margin-bottom: 1rem;">📍</div>
-        <h3 style="color: var(--gold); margin-bottom: 0.5rem;">Visit Us</h3>
-        <p style="color: var(--ink2);">Kigali, Rwanda</p>
-        <p style="color: var(--ink3); margin-top: 0.5rem;">By appointment only</p>
-      </div>
+  <section class="s contact-private" id="privateContact" aria-live="polite">
+    <div class="private-contact-intro">
+      <span class="s-label">Private contact</span>
+      <h2 class="s-heading">Your support<br><em>options are open.</em></h2>
+      <p class="s-body">Thank you for supporting RwandaVisa. Choose the quickest way to reach us, or send a detailed private request below.</p>
     </div>
-    
-    <!-- Contact Form -->
+
+    <div class="private-contact-options">
+      <a class="private-contact-card" href="https://wa.me/250782388933" target="_blank" rel="noopener">
+        <span class="private-contact-icon">💬</span>
+        <span><strong>WhatsApp support</strong><small>Chat with us at +250 782 388 933</small></span>
+        <b>↗</b>
+      </a>
+      <a class="private-contact-card" href="mailto:byja1101@gmail.com?subject=RwandaVisa%20support%20request">
+        <span class="private-contact-icon">✉</span>
+        <span><strong>Email support</strong><small>byja1101@gmail.com</small></span>
+        <b>↗</b>
+      </a>
+    </div>
+
     <div style="max-width: 800px; margin: 0 auto; background: var(--bg2); padding: 3rem; border-radius: 12px;">
-      <h2 class="s-heading" style="font-size: 2rem; text-align: center; margin-bottom: 2rem;">Send us a<br><em>message</em></h2>
-      
-      <form id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+      <form id="contactForm">
         <div style="margin-bottom: 1.5rem;">
-          <label style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Full Name *</label>
-          <input type="text" name="name" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
+          <label for="name" style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Full Name *</label>
+          <input id="name" type="text" name="name" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
         </div>
-        
         <div style="margin-bottom: 1.5rem;">
-          <label style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Email Address *</label>
-          <input type="email" name="email" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
+          <label for="email" style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Email Address *</label>
+          <input id="email" type="email" name="email" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
         </div>
-        
         <div style="margin-bottom: 1.5rem;">
-          <label style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Subject *</label>
-          <select name="subject" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
+          <label for="subject" style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Subject *</label>
+          <select id="subject" name="subject" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
             <option value="">Select subject...</option>
-            <option value="visa">Visa Application Assistance</option>
-            <option value="tour">Tour Booking Inquiry</option>
-            <option value="itinerary">Custom Itinerary Request</option>
-            <option value="general">General Question</option>
+            <option value="visa">Visa application assistance</option>
+            <option value="tour">Tour booking inquiry</option>
+            <option value="itinerary">Custom itinerary request</option>
+            <option value="general">General travel question</option>
           </select>
         </div>
-        
         <div style="margin-bottom: 1.5rem;">
-          <label style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Message *</label>
-          <textarea name="message" rows="6" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;"></textarea>
+          <label for="message" style="display: block; margin-bottom: 0.5rem; color: var(--gold);">Message *</label>
+          <textarea id="message" name="message" rows="6" required style="width: 100%; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;"></textarea>
         </div>
-        
-        <button type="submit" style="width: 100%; padding: 1rem; background: var(--gold); color: var(--bg); border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Send Message →</button>
+        <button type="submit" style="width: 100%; padding: 1rem; background: var(--gold); color: #fff; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Open email request →</button>
       </form>
-      
-      <p style="text-align: center; color: var(--ink3); font-size: 0.8rem; margin-top: 1rem;">We'll respond within 24 hours Monday-Friday</p>
+      <p style="text-align: center; color: var(--ink3); font-size: 0.8rem; margin-top: 1rem;">We usually respond within 24 hours, Monday–Friday.</p>
     </div>
   </section>
 
   <script>
-    document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-      
-      // Show loading state
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Sending...';
-      submitBtn.disabled = true;
-      
-      try {
-        // Replace with your actual Formspree endpoint
-        // const response = await fetch('https://formspree.io/f/your-form-id', {
-        //   method: 'POST',
-        //   body: formData,
-        //   headers: { 'Accept': 'application/json' }
-        // });
-        
-        // Simulate success for demo
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        alert('Thank you! Your message has been sent. We\'ll respond within 24 hours.');
-        form.reset();
-      } catch (error) {
-        alert('Sorry, there was an error sending your message. Please try emailing us directly.');
-      } finally {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }
+    const gate = document.getElementById('supportGate');
+    const privateContact = document.getElementById('privateContact');
+    const unlock = () => {
+      sessionStorage.setItem('rwandaVisaSupportGate', 'unlocked');
+      gate?.closest('section')?.remove();
+      privateContact?.classList.add('is-unlocked');
+      document.getElementById('name')?.focus();
+    };
+
+    if (sessionStorage.getItem('rwandaVisaSupportGate') === 'unlocked') unlock();
+    document.getElementById('unlockContact')?.addEventListener('click', unlock);
+
+    document.getElementById('contactForm')?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget as HTMLFormElement;
+      const data = new FormData(form);
+      const subject = `[Rwanda Visa request] ${data.get('subject')}`;
+      const message = `Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`;
+      window.location.href = `mailto:byja1101@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
     });
   </script>
 

@@ -66,12 +66,19 @@ import Footer from '../components/Footer.astro';
     <div class="s" style="text-align: center;">
       <h2 class="s-heading">Stay<br><em>Updated</em></h2>
       <p style="color: var(--ink2); margin-top: 1rem;">Subscribe to our newsletter for travel tips and exclusive offers.</p>
-      <form style="max-width: 400px; margin: 2rem auto 0; display: flex; gap: 1rem;">
-        <input type="email" placeholder="Your email address" style="flex: 1; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
+      <form id="newsletterForm" style="max-width: 400px; margin: 2rem auto 0; display: flex; gap: 1rem;">
+        <input id="newsletterEmail" type="email" placeholder="Your email address" required style="flex: 1; padding: 0.8rem; background: var(--bg3); border: 1px solid var(--border); color: var(--ink); border-radius: 4px;">
         <button type="submit" style="padding: 0.8rem 1.5rem; background: var(--gold); color: var(--bg); border: none; border-radius: 4px; cursor: pointer;">Subscribe</button>
       </form>
     </div>
   </section>
 
   <Footer />
+  <script>
+    document.getElementById('newsletterForm')?.addEventListener('submit', event => {
+      event.preventDefault();
+      const email = (document.getElementById('newsletterEmail') as HTMLInputElement).value;
+      window.location.href = `mailto:byja1101@gmail.com?subject=${encodeURIComponent('Rwanda Visa newsletter signup')}&body=${encodeURIComponent(`Please add ${email} to the newsletter.`)}`;
+    });
+  </script>
 </Layout>

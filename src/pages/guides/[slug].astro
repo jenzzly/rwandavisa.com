@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const guides = {
+  'rwanda-visa-requirements': { label: 'Visa guide', title: 'Rwanda visa requirements', text: 'Understand the usual e-visa steps, passport requirements, and preparation before you travel.' },
+  'gorilla-trekking-rwanda': { label: 'Wildlife guide', title: 'Gorilla trekking in Rwanda', text: 'Plan permits, packing, timing, and a respectful encounter in Volcanoes National Park.' },
+  'gorilla-trekking': { label: 'Wildlife guide', title: 'How to book a gorilla trek', text: 'A practical starting guide to arranging a gorilla trekking experience in Rwanda.' },
+  'best-time-visit-rwanda': { label: 'Planning guide', title: 'The best time to visit Rwanda', text: 'Choose dates around your priorities, from wildlife viewing to mountain adventures and lake time.' },
+  'living-in-rwanda-expat': { label: 'Living in Rwanda', title: 'An expat guide to Kigali', text: 'A high-level introduction to settling in Kigali, including neighbourhoods and everyday planning.' },
+  'akagera-safari': { label: 'Safari guide', title: 'Akagera safari planning', text: 'Plan a Big Five safari in eastern Rwanda, including the best rhythm for game drives and lake activities.' }
+};
+export function getStaticPaths() { return ['rwanda-visa-requirements', 'gorilla-trekking-rwanda', 'gorilla-trekking', 'best-time-visit-rwanda', 'living-in-rwanda-expat', 'akagera-safari'].map(slug => ({ params: { slug } })); }
+const guide = guides[Astro.params.slug as keyof typeof guides];
+---
+<Layout title={`${guide.title} - Rwanda Visa`}>
+  <Header />
+  <article class="s support-hero"><div class="s-narrow"><span class="s-label">{guide.label}</span><h1 class="s-heading">{guide.title}</h1><p class="s-body">{guide.text}</p><div class="info-box"><strong>Plan confidently:</strong> Requirements and availability can change. Confirm official guidance and reserve time-sensitive activities early.</div><a class="support-button" href="/contact">Get personal help →</a></div></article>
+  <Footer />
+</Layout>

@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const destinations = {
+  gisenyi: { name: 'Gisenyi', label: 'Lake Kivu', text: 'Relax on the shore of Lake Kivu, enjoy a boat trip, and explore Rwanda’s relaxed western gateway.' },
+  huye: { name: 'Huye', label: 'Culture & heritage', text: 'Discover southern Rwanda’s cultural heart, museums, and a welcoming university-town atmosphere.' },
+  rusizi: { name: 'Rusizi', label: 'Nyungwe gateway', text: 'Begin a rainforest escape near Nyungwe National Park, with tea country and lake views along the way.' }
+};
+export function getStaticPaths() { return ['gisenyi', 'huye', 'rusizi'].map(slug => ({ params: { slug } })); }
+const destination = destinations[Astro.params.slug as keyof typeof destinations];
+---
+<Layout title={`${destination.name}, Rwanda - Rwanda Visa`}>
+  <Header />
+  <section class="s support-hero"><div class="s-narrow" style="text-align:center;"><span class="s-label">{destination.label}</span><h1 class="s-heading">Welcome to<br><em>{destination.name}</em></h1><p class="s-body" style="margin:1.5rem auto;">{destination.text}</p><a class="support-button" href="/itinerary">Plan this stop →</a></div></section>
+  <Footer />
+</Layout>

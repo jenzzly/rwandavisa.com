@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Rwanda Itinerary Planner - Rwanda Visa" description="Create a tailored Rwanda travel itinerary in moments.">
+  <Header />
+  <section class="s support-hero">
+    <div class="s-narrow" style="text-align:center;">
+      <span class="s-label">Trip planning</span>
+      <h1 class="s-heading">Build your Rwanda<br><em>route.</em></h1>
+      <p class="s-body" style="margin:1.5rem auto;">Choose your nationality, travel style, and trip length for a practical route and visa-preparation checklist.</p>
+    </div>
+  </section>
+
+  <section class="s" style="padding-top:0;">
+    <div class="ai-section" style="max-width:900px;margin:0 auto;">
+      <div class="ai-form" id="plannerForm">
+        <select id="country" aria-label="Passport nationality">
+          <option value="">Select passport nationality</option>
+          <optgroup label="East African Community">
+            <option value="eac">Burundi</option><option value="eac">Democratic Republic of the Congo</option><option value="eac">Kenya</option><option value="eac">South Sudan</option><option value="eac">Tanzania</option><option value="eac">Uganda</option>
+          </optgroup>
+          <optgroup label="90-day visa-free countries">
+            <option value="ninety">Angola</option><option value="ninety">Bahamas</option><option value="ninety">Benin</option><option value="ninety">Central African Republic</option><option value="ninety">Chad</option><option value="ninety">Republic of the Congo</option><option value="ninety">Côte d’Ivoire</option><option value="ninety">Dominican Republic</option><option value="ninety">Ghana</option><option value="ninety">Guinea</option><option value="ninety">Haiti</option><option value="ninety">Indonesia</option><option value="ninety">Maldives</option><option value="ninety">Mali</option><option value="ninety">Mauritius</option><option value="ninety">Mozambique</option><option value="ninety">Philippines</option><option value="ninety">Qatar</option><option value="ninety">Senegal</option><option value="ninety">Seychelles</option><option value="ninety">Sierra Leone</option><option value="ninety">Singapore</option><option value="ninety">São Tomé & Príncipe</option><option value="ninety">Saint Kitts & Nevis</option>
+          </optgroup>
+          <optgroup label="30-day fee-waiver group">
+            <option value="waiver">Australia</option><option value="waiver">Canada</option><option value="waiver">France</option><option value="waiver">India</option><option value="waiver">Nigeria</option><option value="waiver">South Africa</option><option value="waiver">United Kingdom</option><option value="waiver">Other African Union, Commonwealth, or La Francophonie nationality</option>
+          </optgroup>
+          <optgroup label="Other nationalities">
+            <option value="other">Another nationality</option>
+          </optgroup>
+        </select>
+        <select id="purpose" aria-label="Trip focus">
+          <option value="leisure">Leisure & culture</option>
+          <option value="adventure">Adventure & wildlife</option>
+          <option value="honeymoon">Honeymoon</option>
+          <option value="business">Business</option>
+        </select>
+        <input id="days" type="number" min="2" max="21" value="5" aria-label="Number of days">
+        <select id="style" aria-label="Travel style">
+          <option value="budget">Budget traveler</option>
+          <option value="midrange" selected>Mid-range comfort</option>
+          <option value="luxury">Luxury experience</option>
+        </select>
+        <button id="createPlan" type="button"><strong>CREATE PLAN →</strong></button>
+      </div>
+      <div id="planResult" class="ai-result" aria-live="polite">
+        <h2 style="color:var(--gold);margin-bottom:1rem;">Your route & visa checklist</h2>
+        <div id="planText" style="line-height:1.85;color:var(--ink2);"></div>
+      </div>
+    </div>
+  </section>
+  <Footer />
+  <script>
+    const plans = {
+      leisure: ['Kigali city, galleries, and local food', 'Lake Kivu relaxation in Rubavu or Karongi', 'A cultural stop and coffee experience'],
+      adventure: ['Kigali arrival and briefing', 'Akagera game drive or Volcanoes National Park', 'Lake Kivu recovery and Kigali departure'],
+      honeymoon: ['Kigali boutique stay', 'Lake Kivu private escape', 'Volcanoes or Akagera experience'],
+      business: ['Kigali arrival and meeting day', 'Flexible city exploration', 'Lake Kivu or Akagera extension']
+    };
+    const visaRules = {
+      eac: { title: 'East African Community passport', summary: 'Visa-free entry/pass on arrival, with a stay of up to six months.', fee: 'No visa fee.', docs: ['Passport or other accepted travel document valid for at least 6 months', 'Return/onward travel and accommodation details may be requested at entry'] },
+      ninety: { title: '90-day visa-waiver passport', summary: 'No entry visa is required for a stay of up to 90 days.', fee: 'No visa fee.', docs: ['Passport valid for at least 6 months', 'Keep return/onward travel and accommodation details available'] },
+      waiver: { title: 'AU, Commonwealth, or La Francophonie passport', summary: 'Visa on arrival is available, with visa fees waived for a 30-day visit.', fee: 'No visa fee for the 30-day visitor stay.', docs: ['Passport valid for at least 6 months', 'Keep return/onward travel and accommodation details available'] },
+      other: { title: 'Other passport nationality', summary: 'Visitors may apply online through IremboGov or obtain a visa on arrival. A standard single-entry visitor visa is generally USD 50.', fee: 'Check the official application for your exact visa type and fee.', docs: ['Passport valid for at least 6 months', 'White-background photo (JPG, up to 500KB)', 'Passport biodata page (PDF, up to 500KB)', 'Application letter and any visa-type-specific certificates (PDF, up to 500KB)', 'Valid phone number and email address'] }
+    };
+    const createPlan = () => {
+      const days = Math.max(2, Math.min(21, Number((document.getElementById('days') as HTMLInputElement).value) || 5));
+      const focus = (document.getElementById('purpose') as HTMLSelectElement).value as keyof typeof plans;
+      const style = (document.getElementById('style') as HTMLSelectElement).selectedOptions[0].text;
+      const country = (document.getElementById('country') as HTMLSelectElement).value as keyof typeof visaRules;
+      if (!country) {
+        alert('Please select your passport nationality group first.');
+        return;
+      }
+      const stops = plans[focus];
+      const schedule = Array.from({ length: days }, (_, index) => `<p><strong>Day ${index + 1} —</strong> ${stops[Math.min(index, stops.length - 1)]}</p>`).join('');
+      const visa = visaRules[country];
+      const documents = visa.docs.map(item => `<li>${item}</li>`).join('');
+      (document.getElementById('planText') as HTMLElement).innerHTML = `<p style="margin-bottom:1rem;">A <strong>${style.toLowerCase()}</strong> ${days}-day plan, ready to personalize:</p>${schedule}<hr style="border:0;border-top:1px solid var(--border);margin:1.5rem 0"><p><strong>${visa.title}</strong></p><p>${visa.summary}</p><p><strong>Fees:</strong> ${visa.fee}</p><p style="margin-top:1rem;"><strong>Prepare:</strong></p><ul style="padding-left:1.2rem">${documents}</ul><p class="support-note">This is a planning aid, not legal advice. Rules and eligibility can change—confirm before travel.</p><p style="margin-top:1.5rem;"><a class="support-button" href="https://www.irembo.gov.rw/" target="_blank" rel="noopener">Apply on official IremboGov ↗</a></p>`;
+      document.getElementById('planResult')?.classList.add('show');
+    };
+    document.getElementById('createPlan')?.addEventListener('click', createPlan);
+  </script>
+</Layout>
