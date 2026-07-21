@@ -5,7 +5,7 @@ backend:
   # Required because GitHub Pages + GitHub's OAuth flow needs a small proxy
   # to exchange the auth code for a token. See the setup guide for the
   # one-click Cloudflare Worker that provides this for free.
-  base_url: https://rwandavisa.jenzzly.workers.dev
+  base_url: https://decap-proxy.jenzzly.workers.dev
   auth_endpoint: auth
 
 # Where uploaded images (logos, banner ads) get saved, and the path
