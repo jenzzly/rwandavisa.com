@@ -11,5 +11,8 @@
     "astro": "4.16.19",
     "leaflet": "1.9.4",
     "leaflet-routing-machine": "3.2.12"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
   }
 }
