@@ -1,16 +1,19 @@
 import { defineConfig } from 'astro/config';
-import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://jenzzly.github.io',
-  output: 'server',
-  adapter: cloudflare(),
+
+  // Generate static HTML files
+  output: 'static',
 
   trailingSlash: 'ignore',
 
   vite: {
     ssr: {
-      noExternal: ['leaflet', 'leaflet-routing-machine']
+      noExternal: [
+        'leaflet',
+        'leaflet-routing-machine'
+      ]
     }
   }
 });

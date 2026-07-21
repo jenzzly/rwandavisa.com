@@ -4,17 +4,12 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "10.4.2",
     "astro": "4.16.19",
     "leaflet": "1.9.4",
     "leaflet-routing-machine": "3.2.12"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
   }
 }
