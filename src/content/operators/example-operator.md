@@ -1,5 +1,5 @@
 ---
-name: Example Gorilla Trails Ltd
+name: Kigali Gorilla Trails Ltd
 tagline: Licensed gorilla trekking and safari operator based in Musanze.
 website: https://rwandavisa.com
 tier: featured
