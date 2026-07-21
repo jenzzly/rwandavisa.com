@@ -1,36 +1,84 @@
-import { execSync } from 'node:child_process';
-import path from 'node:path';
+// src/utils/lastModified.ts
 
-/**
- * Returns the real last-commit date for a content file, so "Updated" labels
- * reflect true edits instead of a fake always-current date (which Google's
- * spam policies flag as a manipulative freshness signal).
- *
- * Works because Decap CMS commits every content change as a real git commit.
- * Requires the build to run against a full git history (see
- * .github/workflows/deploy.yml — fetch-depth: 0). Falls back to the
- * frontmatter `date` field, then to null, if git history isn't available
- * (e.g. a fresh checkout with no commits yet, or a zip export like this one).
- */
-export function getLastEditedDate(collectionName: string, entrySlug: string, fallback?: Date): string | null {
-  try {
-    const filePath = path.join('src', 'content', collectionName, `${entrySlug}.md`);
-    const raw = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
-      cwd: process.cwd(),
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).toString().trim();
+const OWNER = "jenzzly";
+const REPO = "jenzzly.github.io";
 
-    if (raw) {
-      return formatDate(new Date(raw));
-    }
-  } catch {
-    // No git history available at build time — fall through to fallback.
+const cache = new Map<string, string | null>();
+
+export async function getLastEditedDate(
+  collection: string,
+  slug: string,
+  fallback?: Date,
+): Promise<string | null> {
+  const cacheKey = `${collection}/${slug}`;
+
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey)!;
   }
 
-  if (fallback) return formatDate(fallback);
+  const filePath = `src/content/${collection}/${slug}.md`;
+
+  try {
+    const headers: HeadersInit = {
+      Accept: "application/vnd.github+json",
+      "User-Agent": "rwandavisa.com",
+    };
+
+    const token = import.meta.env.GITHUB_TOKEN;
+
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/commits?path=${encodeURIComponent(
+        filePath,
+      )}&per_page=1`,
+      {
+        headers,
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `GitHub API returned ${response.status}: ${response.statusText}`,
+      );
+    }
+
+    const commits = await response.json();
+
+    if (Array.isArray(commits) && commits.length > 0) {
+      const date = commits[0]?.commit?.committer?.date;
+
+      if (date) {
+        const formatted = formatDate(new Date(date));
+
+        cache.set(cacheKey, formatted);
+
+        return formatted;
+      }
+    }
+  } catch (error) {
+    console.warn(
+      `[lastModified] Could not fetch git history for ${filePath}:`,
+      error,
+    );
+  }
+
+  if (fallback) {
+    const formatted = formatDate(fallback);
+    cache.set(cacheKey, formatted);
+    return formatted;
+  }
+
+  cache.set(cacheKey, null);
   return null;
 }
 
-function formatDate(d: Date): string {
-  return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
 }
