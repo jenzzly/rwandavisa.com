@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit } = Astro.props;
+
+const all = await getCollection('operators');
+const now = new Date();
+
+const active = all
+  .filter((o) => {
+    if (!o.data.active) return false;
+    if (o.data.startDate > now) return false;
+    if (o.data.endDate && o.data.endDate < now) return false;
+    return true;
+  })
+  .sort((a, b) => {
+    // Featured listings first, then by explicit order.
+    if (a.data.tier !== b.data.tier) return a.data.tier === 'featured' ? -1 : 1;
+    return a.data.order - b.data.order;
+  });
+
+const operators = limit ? active.slice(0, limit) : active;
+---
+
+{operators.length > 0 && (
+  <section class="s" id="operators">
+    <span class="s-label reveal">Trusted Partners</span>
+    <h2 class="s-heading reveal d1">Local tour<br><em>operators</em></h2>
+    <p class="s-body" style="max-width: 700px;">Rwanda-based operators we work with directly for on-the-ground tours.</p>
+
+    <div class="operator-grid">
+      {operators.map((op) => (
+        <a href={op.data.website} target="_blank" rel="noopener sponsored" class={`operator-card ${op.data.tier === 'featured' ? 'featured' : ''}`}>
+          {op.data.tier === 'featured' && <span class="operator-badge">Featured</span>}
+          {op.data.logo && <img src={op.data.logo} alt={op.data.name} class="operator-logo" />}
+          <h4>{op.data.name}</h4>
+          <p>{op.data.tagline}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .operator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .operator-card {
+    position: relative;
+    background: var(--bg3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease;
+  }
+  .operator-card:hover {
+    transform: translateY(-3px);
+  }
+  .operator-card.featured {
+    border: 1px solid var(--gold);
+  }
+  .operator-badge {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+  }
+  .operator-logo {
+    max-height: 48px;
+    max-width: 100%;
+    margin-bottom: 0.8rem;
+    object-fit: contain;
+  }
+  .operator-card h4 {
+    margin-bottom: 0.4rem;
+    color: var(--gold);
+  }
+  .operator-card p {
+    color: var(--ink2);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+</style>

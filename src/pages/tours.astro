@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SponsorBanner from '../components/SponsorBanner.astro';
+import OperatorGrid from '../components/OperatorGrid.astro';
 ---
 
 <Layout title="Rwanda Tours - Gorilla Trekking & Safari Experiences">
@@ -22,6 +24,8 @@ import Footer from '../components/Footer.astro';
       data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
+
+  <SponsorBanner placement="tours" />
 
   <!-- Tour Packages -->
   <section class="s">
@@ -106,6 +110,9 @@ import Footer from '../components/Footer.astro';
       </div>
     </div>
   </section>
+
+  <!-- Featured Local Operators -->
+  <OperatorGrid />
 
   <Footer />
 </Layout>

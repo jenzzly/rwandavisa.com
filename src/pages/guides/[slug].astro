@@ -2,20 +2,63 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getLastEditedDate } from '../../utils/lastModified';
 
-const guides = {
-  'rwanda-visa-requirements': { label: 'Visa guide', title: 'Rwanda visa requirements', text: 'Understand the usual e-visa steps, passport requirements, and preparation before you travel.' },
-  'gorilla-trekking-rwanda': { label: 'Wildlife guide', title: 'Gorilla trekking in Rwanda', text: 'Plan permits, packing, timing, and a respectful encounter in Volcanoes National Park.' },
-  'gorilla-trekking': { label: 'Wildlife guide', title: 'How to book a gorilla trek', text: 'A practical starting guide to arranging a gorilla trekking experience in Rwanda.' },
-  'best-time-visit-rwanda': { label: 'Planning guide', title: 'The best time to visit Rwanda', text: 'Choose dates around your priorities, from wildlife viewing to mountain adventures and lake time.' },
-  'living-in-rwanda-expat': { label: 'Living in Rwanda', title: 'An expat guide to Kigali', text: 'A high-level introduction to settling in Kigali, including neighbourhoods and everyday planning.' },
-  'akagera-safari': { label: 'Safari guide', title: 'Akagera safari planning', text: 'Plan a Big Five safari in eastern Rwanda, including the best rhythm for game drives and lake activities.' }
-};
-export function getStaticPaths() { return ['rwanda-visa-requirements', 'gorilla-trekking-rwanda', 'gorilla-trekking', 'best-time-visit-rwanda', 'living-in-rwanda-expat', 'akagera-safari'].map(slug => ({ params: { slug } })); }
-const guide = guides[Astro.params.slug as keyof typeof guides];
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'guides'> };
+const { Content } = await entry.render();
+const updated = getLastEditedDate('guides', entry.slug, entry.data.date);
 ---
-<Layout title={`${guide.title} - Rwanda Visa`}>
+<Layout title={`${entry.data.title} - Rwanda Visa`}>
   <Header />
-  <article class="s support-hero"><div class="s-narrow"><span class="s-label">{guide.label}</span><h1 class="s-heading">{guide.title}</h1><p class="s-body">{guide.text}</p><div class="info-box"><strong>Plan confidently:</strong> Requirements and availability can change. Confirm official guidance and reserve time-sensitive activities early.</div><a class="support-button" href="/contact">Get personal help →</a></div></article>
+  <article class="s support-hero">
+    <div class="s-narrow">
+      <span class="s-label">{entry.data.label}</span>
+      <h1 class="s-heading">{entry.data.title}</h1>
+      <p class="s-body">{entry.data.intro}</p>
+      {updated && <p class="guide-updated">Last updated {updated}</p>}
+      <div class="s-body guide-body" style="max-width: 100%; margin-top: 1.5rem;">
+        <Content />
+      </div>
+      <a class="support-button" href="/contact">Get personal help →</a>
+    </div>
+  </article>
   <Footer />
 </Layout>
+
+<style>
+  .guide-updated {
+    font-size: 0.8rem;
+    color: var(--ink2);
+    margin-top: 0.5rem;
+  }
+  .guide-body :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--gold);
+    font-size: 1.3rem;
+  }
+  .guide-body :global(ul) {
+    margin: 1rem 0;
+    padding-left: 1.4rem;
+  }
+  .guide-body :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  .guide-body :global(p) {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .guide-body :global(.info-box) {
+    margin-top: 2rem;
+  }
+</style>

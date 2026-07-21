@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  placement: 'homepage' | 'guides' | 'tours' | 'sitewide';
+}
+
+const { placement } = Astro.props;
+
+const allSponsors = await getCollection('sponsors');
+const now = new Date();
+
+const active = allSponsors.filter((s) => {
+  if (!s.data.active) return false;
+  if (s.data.placement !== placement && s.data.placement !== 'sitewide') return false;
+  if (s.data.startDate && s.data.startDate > now) return false;
+  if (s.data.endDate && s.data.endDate < now) return false;
+  return true;
+}).sort((a, b) => a.data.order - b.data.order);
+
+// Show one banner per placement so paid slots don't crowd a page.
+const sponsor = active[0];
+---
+
+{sponsor && (
+  <div class="sponsor-banner">
+    <span class="sponsor-label">Sponsored</span>
+    <a href={sponsor.data.website} target="_blank" rel="noopener sponsored">
+      <img src={sponsor.data.bannerImage} alt={sponsor.data.name} />
+    </a>
+  </div>
+)}
+
+<style>
+  .sponsor-banner {
+    max-width: 1100px;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+    text-align: center;
+    position: relative;
+  }
+  .sponsor-label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    margin-bottom: 0.4rem;
+  }
+  .sponsor-banner img {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+</style>

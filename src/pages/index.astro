@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SponsorBanner from '../components/SponsorBanner.astro';
 ---
 
 <Layout title="RwandaVisa — Your Trusted Rwanda Travel Partner">
@@ -36,7 +37,7 @@ import Footer from '../components/Footer.astro';
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
-  <!-- Intro Section - Flyward style -->
+  <SponsorBanner placement="homepage" />
   <section id="intro" style="padding:6rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start">
     <div class="intro-left reveal">
       <span class="s-label" style="background:rgba(0,158,96,0.1); padding:0.3rem 0.8rem; border-radius:40px; font-weight:bold;">🇷🇼 RWANDA ROAD TRIP</span>
@@ -305,7 +306,7 @@ import Footer from '../components/Footer.astro';
           <h4><strong>Rwanda Visa Requirements 2025</strong></h4>
           <p>Complete country-by-country breakdown. Most nationalities qualify for e-visa in 72 hours.</p>
         </a>
-        <a href="/blog/best-time-to-visit" class="article-mini reveal d1">
+        <a href="/guides/best-time-visit-rwanda" class="article-mini reveal d1">
           <span class="art-cat"><strong>PLANNING</strong></span>
           <h4><strong>Best Time to Visit Rwanda 2025</strong></h4>
           <p>Month-by-month breakdown of weather, crowds, and wildlife viewing opportunities.</p>
