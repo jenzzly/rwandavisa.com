@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: jenzzly/jenzzly.github.io
+  repo: jenzzly/rwandavisa.com
   branch: main
   # Required because GitHub Pages + GitHub's OAuth flow needs a small proxy
   # to exchange the auth code for a token. See the setup guide for the
