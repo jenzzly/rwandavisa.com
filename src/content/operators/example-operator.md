@@ -3,7 +3,7 @@ name: Example Gorilla Trails Ltd
 tagline: Licensed gorilla trekking and safari operator based in Musanze.
 website: https://rwandavisa.com
 tier: featured
-active: false
+active: true
 startDate: 2026-07-21
 endDate: 2027-07-21
 order: 1
