@@ -16,6 +16,234 @@ public_folder: "/images/uploads"
 publish_mode: simple
 
 collections:
+  # ---------------------------------------------------------------
+  # Singleton pages — one CMS entry per page, editable end to end.
+  # ---------------------------------------------------------------
+  - name: "pages"
+    label: "Site Pages"
+    files:
+      - name: "home"
+        label: "Homepage"
+        file: "src/content/pages/home.yaml"
+        fields:
+          - { label: "Hero — small label", name: "heroLabel", widget: "string" }
+          - { label: "Hero — title", name: "heroTitle", widget: "string" }
+          - { label: "Hero — subtitle", name: "heroSub", widget: "text" }
+          - { label: "Intro — small label", name: "introLabel", widget: "string" }
+          - { label: "Intro — heading", name: "introHeading", widget: "string" }
+          - label: "Intro — paragraphs"
+            name: "intro"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - label: "Stats row"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Number", name: "number", widget: "string" }
+              - { label: "Suffix (optional, e.g. + or HR)", name: "suffix", widget: "string", required: false }
+              - { label: "Label", name: "label", widget: "string" }
+          - { label: "Services — small label", name: "servicesLabel", widget: "string" }
+          - { label: "Services — heading", name: "servicesHeading", widget: "string" }
+          - label: "Services (3 cards)"
+            name: "services"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Link", name: "link", widget: "string" }
+              - { label: "Link text", name: "linkText", widget: "string" }
+          - { label: "Testimonial quote", name: "testimonialQuote", widget: "text" }
+          - { label: "Testimonial author", name: "testimonialAuthor", widget: "string" }
+          - { label: "CTA — small label", name: "ctaLabel", widget: "string" }
+          - { label: "CTA — heading", name: "ctaHeading", widget: "string" }
+          - label: "CTA buttons"
+            name: "ctaButtons"
+            widget: "list"
+            fields:
+              - { label: "Button text", name: "label", widget: "string" }
+              - { label: "Link", name: "link", widget: "string" }
+
+      - name: "visa"
+        label: "Visa Page"
+        file: "src/content/pages/visa.yaml"
+        fields:
+          - { label: "Browser tab title", name: "title", widget: "string" }
+          - { label: "Small label", name: "label", widget: "string" }
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Subheading", name: "subheading", widget: "text" }
+          - label: "Visa types"
+            name: "visaTypes"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Fee", name: "fee", widget: "string" }
+              - { label: "Processing time", name: "processing", widget: "string" }
+          - label: "Requirement groups"
+            name: "requirementGroups"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Intro line", name: "intro", widget: "string" }
+              - { label: "Items", name: "items", widget: "list", field: { label: "Item", name: "item", widget: "string" } }
+              - { label: "Footnote", name: "footnote", widget: "string" }
+          - label: "Application steps"
+            name: "steps"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji or number)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+          - label: "Important notes"
+            name: "notes"
+            widget: "list"
+            field: { label: "Note", name: "note", widget: "string" }
+
+      - name: "itinerary"
+        label: "Itinerary Page"
+        file: "src/content/pages/itinerary.yaml"
+        fields:
+          - { label: "Browser tab title", name: "title", widget: "string" }
+          - { label: "Small label", name: "label", widget: "string" }
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Subheading", name: "subheading", widget: "text" }
+
+      - name: "tours"
+        label: "Tours Page (hero & CTA — see the Tours collection for the packages)"
+        file: "src/content/pages/tours.yaml"
+        fields:
+          - { label: "Browser tab title", name: "title", widget: "string" }
+          - { label: "Small label", name: "label", widget: "string" }
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Subheading", name: "subheading", widget: "text" }
+          - { label: "CTA heading", name: "ctaHeading", widget: "string" }
+          - label: "CTA paragraph(s)"
+            name: "intro"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - label: "CTA buttons"
+            name: "ctaButtons"
+            widget: "list"
+            fields:
+              - { label: "Button text", name: "label", widget: "string" }
+              - { label: "Link", name: "link", widget: "string" }
+
+      - name: "operators"
+        label: "Operators Page"
+        file: "src/content/pages/operators.yaml"
+        fields:
+          - { label: "Browser tab title", name: "title", widget: "string" }
+          - { label: "Small label", name: "label", widget: "string" }
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Subheading", name: "subheading", widget: "text" }
+          - { label: "CTA small label", name: "ctaLabel", widget: "string" }
+          - { label: "CTA heading", name: "ctaHeading", widget: "string" }
+          - label: "CTA paragraph(s)"
+            name: "intro"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - label: "CTA buttons"
+            name: "ctaButtons"
+            widget: "list"
+            fields:
+              - { label: "Button text", name: "label", widget: "string" }
+              - { label: "Link", name: "link", widget: "string" }
+
+      - name: "contact"
+        label: "Contact Page"
+        file: "src/content/pages/contact.yaml"
+        fields:
+          - { label: "Browser tab title", name: "title", widget: "string" }
+          - { label: "Small label", name: "label", widget: "string" }
+          - { label: "Heading", name: "heading", widget: "string" }
+          - label: "Intro paragraph(s)"
+            name: "intro"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - label: "Suggested support amounts"
+            name: "supportOptions"
+            widget: "list"
+            fields:
+              - { label: "Amount", name: "amount", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+          - label: "Contact channels"
+            name: "contactChannels"
+            widget: "list"
+            fields:
+              - { label: "Icon", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Detail (shown to visitors)", name: "detail", widget: "string" }
+              - { label: "Link URL", name: "url", widget: "string" }
+
+      - name: "privacy"
+        label: "Privacy Policy"
+        file: "src/content/pages/privacy.yaml"
+        fields:
+          - { label: "Browser tab title", name: "title", widget: "string" }
+          - { label: "Policy text (use ### for section headings)", name: "body", widget: "markdown" }
+
+  # ---------------------------------------------------------------
+  # Repeating collections
+  # ---------------------------------------------------------------
+  - name: "destinations"
+    label: "Destinations"
+    folder: "src/content/destinations"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Category label", name: "label", widget: "string", hint: "e.g. Safari, Lake Kivu, Capital City" }
+      - { label: "Route-day badge (optional)", name: "tag", widget: "string", required: false, hint: "e.g. DAY 1-2, START/END. Leave blank if not on the main 7-day route." }
+      - { label: "Hero image", name: "heroImage", widget: "image" }
+      - { label: "Intro paragraph", name: "intro", widget: "text" }
+      - label: "Highlights"
+        name: "highlights"
+        widget: "list"
+        field: { label: "Highlight", name: "highlight", widget: "string" }
+      - { label: "Second section title", name: "bestTimeTitle", widget: "string", required: false }
+      - { label: "Second section text", name: "bestTimeText", widget: "text", required: false }
+      - { label: "Info box title", name: "infoBoxTitle", widget: "string", required: false }
+      - { label: "Info box text", name: "infoBoxText", widget: "text", required: false }
+      - { label: "Latitude (for the homepage map)", name: "lat", widget: "number", value_type: "float", required: false }
+      - { label: "Longitude (for the homepage map)", name: "lng", widget: "number", value_type: "float", required: false }
+      - { label: "On the classic 7-day route?", name: "onRoute", widget: "boolean", default: false, hint: "If on, this stop appears on the homepage route section and map." }
+      - { label: "Order on the route", name: "order", widget: "number", default: 100 }
+
+  - name: "tours"
+    label: "Tour Packages"
+    folder: "src/content/tours"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Tag pill", name: "tagPill", widget: "string", hint: "e.g. Most Popular, Big Five Safari" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Duration", name: "duration", widget: "string", hint: "e.g. 3 days" }
+      - { label: "Price", name: "price", widget: "string", hint: "e.g. From $1,800 per person" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Sort order (lower = shown first)", name: "order", widget: "number", default: 100 }
+
+  - name: "videos"
+    label: "Videos"
+    folder: "src/content/videos"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "YouTube URL", name: "youtubeUrl", widget: "string", hint: "Any youtube.com/watch or youtu.be link" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Published date", name: "publishedDate", widget: "datetime", required: false }
+      - { label: "Sort order (lower = shown first)", name: "order", widget: "number", default: 100 }
+
   - name: "guides"
     label: "Travel Guides"
     folder: "src/content/guides"

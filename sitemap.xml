@@ -14,9 +14,13 @@
   <url><loc>https://rwandavisa.com/destinations/kigali</loc><priority>0.7</priority></url>
   <url><loc>https://rwandavisa.com/destinations/musanze</loc><priority>0.7</priority></url>
   <url><loc>https://rwandavisa.com/destinations/akagera</loc><priority>0.7</priority></url>
-  <url><loc>https://rwandavisa.com/destinations/rubavu</loc><priority>0.7</priority></url>
+  <url><loc>https://rwandavisa.com/destinations/gisenyi</loc><priority>0.7</priority></url>
   <url><loc>https://rwandavisa.com/destinations/karongi</loc><priority>0.7</priority></url>
   <url><loc>https://rwandavisa.com/destinations/nyungwe</loc><priority>0.7</priority></url>
+  <url><loc>https://rwandavisa.com/destinations/huye</loc><priority>0.5</priority></url>
+  <url><loc>https://rwandavisa.com/destinations/rusizi</loc><priority>0.5</priority></url>
+  <url><loc>https://rwandavisa.com/operators</loc><priority>0.6</priority></url>
+  <url><loc>https://rwandavisa.com/videos</loc><priority>0.6</priority></url>
   <url><loc>https://rwandavisa.com/contact</loc><priority>0.6</priority></url>
   <url><loc>https://rwandavisa.com/privacy-policy</loc><priority>0.3</priority></url>
 </urlset>

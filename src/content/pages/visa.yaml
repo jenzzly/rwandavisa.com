@@ -1,0 +1,65 @@
+title: Rwanda Visa Services - Easy E-Visa Application Guide
+label: Visa Services
+heading: "Rwanda E-Visa Guide 2025"
+subheading: "Step-by-step guidance for Rwanda's online visa system — approved in as little as 72 hours for most nationalities."
+visaTypes:
+  - icon: "🏖️"
+    title: Tourist Visa
+    desc: 30-day single entry for leisure travel, sightseeing, and visiting family. Renewable once in-country.
+    fee: "$50"
+    processing: 3-5 business days
+  - icon: "💼"
+    title: Business Visa
+    desc: For meetings, conferences, training, or short-term professional engagements. Valid for 30-90 days.
+    fee: "$50"
+    processing: 3-5 business days
+  - icon: "🎓"
+    title: Student Visa
+    desc: For academic programs, research, or internships at Rwandan institutions. Valid for duration of study.
+    fee: "$50"
+    processing: 7-10 business days
+  - icon: "✈️"
+    title: Transit Visa
+    desc: For passing through Rwanda to another destination. Valid for up to 72 hours.
+    fee: "$30"
+    processing: 24-48 hours
+requirementGroups:
+  - icon: "🌍"
+    title: Visa-Free Access
+    intro: "All African Union member states, including:"
+    items:
+      - "Kenya, Uganda, Tanzania"
+      - "South Africa, Nigeria, Ghana"
+      - "Ethiopia, Senegal, Egypt"
+    footnote: "Stay: Up to 90 days"
+  - icon: "📋"
+    title: E-Visa Required
+    intro: "Most other nationalities need an e-visa:"
+    items:
+      - "United States, Canada"
+      - "United Kingdom, Australia"
+      - "Germany, France, Italy"
+      - "China, India, Japan"
+    footnote: "Processing: 72 hours average"
+  - icon: "✅"
+    title: Visa on Arrival
+    intro: "Available at Kigali Airport for:"
+    items:
+      - "All AU member states"
+      - "Select other nationalities"
+    footnote: "Fee: $50 cash or card"
+steps:
+  - icon: "1️⃣"
+    title: Complete Online Form
+    desc: Fill out the application at irembo.gov.rw with your personal and travel details.
+  - icon: "2️⃣"
+    title: Upload Documents
+    desc: Passport scan, photo, flight booking, and accommodation proof.
+  - icon: "3️⃣"
+    title: Pay & Receive
+    desc: Pay $50 online and receive your approved visa via email within 72 hours.
+notes:
+  - Passport must be valid for at least 6 months from arrival date
+  - Yellow fever vaccination certificate required for travelers from endemic countries
+  - Print your e-visa approval — you'll need it for boarding and arrival
+  - East Africa Tourist Visa allows travel between Rwanda, Kenya, and Uganda ($100)

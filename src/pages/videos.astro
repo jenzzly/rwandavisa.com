@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+
+function getYoutubeId(url: string): string | null {
+  const match = url.match(/(?:youtu\.be\/|v=|shorts\/)([\w-]{11})/);
+  return match ? match[1] : null;
+}
+---
+
+<Layout title="Rwanda Travel Videos - RwandaVisa" description="Watch Rwanda travel videos from the RwandaVisa YouTube channel.">
+  <Header />
+
+  <section id="videos-hero" style="padding-top: 150px; background: var(--bg2);">
+    <div class="s">
+      <div class="s-narrow" style="margin: 0 auto; text-align: center;">
+        <span class="s-label">On YouTube</span>
+        <h1 class="s-heading">Rwanda,<br><em>on video</em></h1>
+        <p class="s-body" style="max-width: 700px; margin: 1.5rem auto 0;">Trip diaries, visa walkthroughs, and destination guides — straight from the road.</p>
+        <a href="https://www.youtube.com/@jenzzly" target="_blank" rel="noopener" class="btn-gold" style="display: inline-block; margin-top: 1.5rem; background: var(--gold); color: var(--bg); padding: 0.7rem 1.8rem; text-decoration: none;">Subscribe on YouTube →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="s">
+    {videos.length === 0 && (
+      <p class="s-body" style="text-align:center;">No videos yet — add some from the CMS.</p>
+    )}
+    <div class="video-grid">
+      {videos.map((video) => {
+        const id = getYoutubeId(video.data.youtubeUrl);
+        return (
+          <div class="video-card">
+            {id ? (
+              <div class="video-embed">
+                <iframe
+                  src={`https://www.youtube.com/embed/${id}`}
+                  title={video.data.title}
+                  loading="lazy"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            ) : (
+              <a class="video-embed video-embed-fallback" href={video.data.youtubeUrl} target="_blank" rel="noopener">▶ Watch on YouTube</a>
+            )}
+            <h3 class="video-title">{video.data.title}</h3>
+            {video.data.description && <p class="video-desc">{video.data.description}</p>}
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  .video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg3);
+  }
+  .video-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .video-embed-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .video-title {
+    margin-top: 1rem;
+    color: var(--gold);
+    font-size: 1.1rem;
+  }
+  .video-desc {
+    margin-top: 0.4rem;
+    color: var(--ink2);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+</style>

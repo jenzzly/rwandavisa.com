@@ -2,15 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'itinerary');
+const p = page!.data;
 ---
 
-<Layout title="Rwanda Itinerary Planner - Rwanda Visa" description="Create a tailored Rwanda travel itinerary in moments.">
+<Layout title={p.title} description="Create a tailored Rwanda travel itinerary in moments.">
   <Header />
   <section class="s support-hero">
     <div class="s-narrow" style="text-align:center;">
-      <span class="s-label">Trip planning</span>
-      <h1 class="s-heading">Build your Rwanda<br><em>route.</em></h1>
-      <p class="s-body" style="margin:1.5rem auto;">Choose your nationality, travel style, and trip length for a practical route and visa-preparation checklist.</p>
+      <span class="s-label">{p.label}</span>
+      <h1 class="s-heading">{p.heading}</h1>
+      <p class="s-body" style="margin:1.5rem auto;">{p.subheading}</p>
     </div>
   </section>
 

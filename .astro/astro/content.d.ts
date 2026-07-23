@@ -140,7 +140,65 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		"guides": {
+		"destinations": {
+"akagera.md": {
+	id: "akagera.md";
+  slug: "akagera";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"gisenyi.md": {
+	id: "gisenyi.md";
+  slug: "gisenyi";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"huye.md": {
+	id: "huye.md";
+  slug: "huye";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"karongi.md": {
+	id: "karongi.md";
+  slug: "karongi";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"kigali.md": {
+	id: "kigali.md";
+  slug: "kigali";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"musanze.md": {
+	id: "musanze.md";
+  slug: "musanze";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"nyungwe.md": {
+	id: "nyungwe.md";
+  slug: "nyungwe";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"rusizi.md": {
+	id: "rusizi.md";
+  slug: "rusizi";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+};
+"guides": {
 "akagera-safari.md": {
 	id: "akagera-safari.md";
   slug: "akagera-safari";
@@ -202,11 +260,87 @@ declare module 'astro:content' {
   data: InferEntrySchema<"sponsors">
 } & { render(): Render[".md"] };
 };
+"tours": {
+"akagera-wildlife-safari.md": {
+	id: "akagera-wildlife-safari.md";
+  slug: "akagera-wildlife-safari";
+  body: string;
+  collection: "tours";
+  data: InferEntrySchema<"tours">
+} & { render(): Render[".md"] };
+"golden-monkey-trek.md": {
+	id: "golden-monkey-trek.md";
+  slug: "golden-monkey-trek";
+  body: string;
+  collection: "tours";
+  data: InferEntrySchema<"tours">
+} & { render(): Render[".md"] };
+"gorilla-trekking-experience.md": {
+	id: "gorilla-trekking-experience.md";
+  slug: "gorilla-trekking-experience";
+  body: string;
+  collection: "tours";
+  data: InferEntrySchema<"tours">
+} & { render(): Render[".md"] };
+"lake-kivu-getaway.md": {
+	id: "lake-kivu-getaway.md";
+  slug: "lake-kivu-getaway";
+  body: string;
+  collection: "tours";
+  data: InferEntrySchema<"tours">
+} & { render(): Render[".md"] };
+};
+"videos": {
+"example-video.md": {
+	id: "example-video.md";
+  slug: "example-video";
+  body: string;
+  collection: "videos";
+  data: InferEntrySchema<"videos">
+} & { render(): Render[".md"] };
+};
 
 	};
 
 	type DataEntryMap = {
-		
+		"pages": {
+"contact": {
+	id: "contact";
+  collection: "pages";
+  data: InferEntrySchema<"pages">
+};
+"home": {
+	id: "home";
+  collection: "pages";
+  data: InferEntrySchema<"pages">
+};
+"itinerary": {
+	id: "itinerary";
+  collection: "pages";
+  data: InferEntrySchema<"pages">
+};
+"operators": {
+	id: "operators";
+  collection: "pages";
+  data: InferEntrySchema<"pages">
+};
+"privacy": {
+	id: "privacy";
+  collection: "pages";
+  data: InferEntrySchema<"pages">
+};
+"tours": {
+	id: "tours";
+  collection: "pages";
+  data: InferEntrySchema<"pages">
+};
+"visa": {
+	id: "visa";
+  collection: "pages";
+  data: InferEntrySchema<"pages">
+};
+};
+
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;

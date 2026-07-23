@@ -1,0 +1,281 @@
+{
+  "$ref": "#/definitions/pages",
+  "definitions": {
+    "pages": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "heading": {
+          "type": "string"
+        },
+        "subheading": {
+          "type": "string"
+        },
+        "intro": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "heroLabel": {
+          "type": "string"
+        },
+        "heroTitle": {
+          "type": "string"
+        },
+        "heroSub": {
+          "type": "string"
+        },
+        "introLabel": {
+          "type": "string"
+        },
+        "introHeading": {
+          "type": "string"
+        },
+        "servicesLabel": {
+          "type": "string"
+        },
+        "servicesHeading": {
+          "type": "string"
+        },
+        "stats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "string"
+              },
+              "suffix": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "number",
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "desc": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              },
+              "linkText": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "icon",
+              "title",
+              "desc",
+              "link",
+              "linkText"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "testimonialQuote": {
+          "type": "string"
+        },
+        "testimonialAuthor": {
+          "type": "string"
+        },
+        "ctaLabel": {
+          "type": "string"
+        },
+        "ctaHeading": {
+          "type": "string"
+        },
+        "ctaButtons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "link"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "visaTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "desc": {
+                "type": "string"
+              },
+              "fee": {
+                "type": "string"
+              },
+              "processing": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "icon",
+              "title",
+              "desc",
+              "fee",
+              "processing"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "requirementGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "intro": {
+                "type": "string"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "footnote": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "icon",
+              "title",
+              "intro",
+              "items",
+              "footnote"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "desc": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "icon",
+              "title",
+              "desc"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supportOptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "amount",
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "contactChannels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "detail": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "icon",
+              "title",
+              "detail",
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "body": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -2,17 +2,147 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const destinations = {
-  gisenyi: { name: 'Gisenyi', label: 'Lake Kivu', text: 'Relax on the shore of Lake Kivu, enjoy a boat trip, and explore Rwanda’s relaxed western gateway.' },
-  huye: { name: 'Huye', label: 'Culture & heritage', text: 'Discover southern Rwanda’s cultural heart, museums, and a welcoming university-town atmosphere.' },
-  rusizi: { name: 'Rusizi', label: 'Nyungwe gateway', text: 'Begin a rainforest escape near Nyungwe National Park, with tea country and lake views along the way.' }
-};
-export function getStaticPaths() { return ['gisenyi', 'huye', 'rusizi'].map(slug => ({ params: { slug } })); }
-const destination = destinations[Astro.params.slug as keyof typeof destinations];
+export async function getStaticPaths() {
+  const destinations = await getCollection('destinations');
+  return destinations.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'destinations'> };
+const d = entry.data;
 ---
-<Layout title={`${destination.name}, Rwanda - Rwanda Visa`}>
+<Layout title={`${d.name} - Rwanda Visa`}>
   <Header />
-  <section class="s support-hero"><div class="s-narrow" style="text-align:center;"><span class="s-label">{destination.label}</span><h1 class="s-heading">Welcome to<br><em>{destination.name}</em></h1><p class="s-body" style="margin:1.5rem auto;">{destination.text}</p><a class="support-button" href="/itinerary">Plan this stop →</a></div></section>
+
+  <div style="padding-top: 120px;" class="destination-page">
+    <div class="destination-container">
+      {d.tag && <span class="destination-tag">{d.tag}</span>}
+      <span class="destination-label">{d.label}</span>
+      <h1 class="destination-title">{d.name}</h1>
+      <div class="destination-image">
+        <img src={d.heroImage} alt={d.name} />
+      </div>
+      <div class="destination-content">
+        <p>{d.intro}</p>
+
+        {d.highlights.length > 0 && (
+          <>
+            <h3>Highlights</h3>
+            <ul>
+              {d.highlights.map((item) => <li>{item}</li>)}
+            </ul>
+          </>
+        )}
+
+        {d.bestTimeText && (
+          <>
+            <h3>{d.bestTimeTitle ?? 'Good to know'}</h3>
+            <p>{d.bestTimeText}</p>
+          </>
+        )}
+
+        {d.infoBoxText && (
+          <div class="info-box">
+            <h4>{d.infoBoxTitle ?? 'Good to know'}</h4>
+            <p>{d.infoBoxText}</p>
+          </div>
+        )}
+      </div>
+      <a class="support-button" href="/itinerary">Plan this stop →</a>
+    </div>
+  </div>
+
   <Footer />
 </Layout>
+
+<style>
+  .destination-page {
+    padding: 6rem 2rem;
+    background: var(--bg);
+  }
+  .destination-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .destination-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.8rem;
+    border-radius: 40px;
+    margin-bottom: 0.8rem;
+  }
+  .destination-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: block;
+    font-weight: bold;
+  }
+  .destination-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+  .destination-image {
+    margin: 2rem 0;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .destination-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .destination-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--ink-light);
+  }
+  .destination-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  .destination-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .destination-content li {
+    margin-bottom: 0.5rem;
+  }
+  .info-box {
+    background: var(--bg-off);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-radius: 12px;
+    border-left: 3px solid var(--gold);
+  }
+  .info-box h4 {
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .support-button {
+    display: inline-block;
+    margin-top: 2rem;
+  }
+  @media (max-width: 768px) {
+    .destination-page {
+      padding: 5rem 1rem;
+    }
+  }
+</style>

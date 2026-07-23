@@ -3,11 +3,39 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SponsorBanner from '../components/SponsorBanner.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'home');
+const p = page!.data;
+
+const routeStops = (await getCollection('destinations'))
+  .filter((d) => d.data.onRoute)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const guides = (await getCollection('guides')).slice(0, 3);
+
+// Map waypoints: the route out, plus a return leg back to the first stop (Kigali).
+const mapWaypoints = [
+  ...routeStops.map((d) => ({
+    name: d.data.name,
+    slug: d.slug,
+    coords: [d.data.lat, d.data.lng],
+    desc: d.data.intro.split('.')[0] + '.',
+    tag: d.data.tag ?? '',
+  })),
+  routeStops[0] && {
+    name: routeStops[0].data.name,
+    slug: routeStops[0].slug,
+    coords: [routeStops[0].data.lat, routeStops[0].data.lng],
+    desc: 'Return, farewell dinner',
+    tag: 'RETURN',
+  },
+].filter(Boolean);
 ---
 
 <Layout title="RwandaVisa — Your Trusted Rwanda Travel Partner">
   <Header />
-  
+
   <!-- Hero with Interactive Route Map -->
   <section id="hero" style="position: relative; height: 100vh; min-height: 640px; width: 100%;">
     <div id="rwandaMap" style="height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index: 1;"></div>
@@ -15,9 +43,9 @@ import SponsorBanner from '../components/SponsorBanner.astro';
     <div class="hero-vignette"></div>
     <div class="hero-bottom-fade"></div>
     <div class="hero-content" style="position: relative; z-index: 3;">
-      <p class="hero-eyebrow"><strong>LAND OF A THOUSAND HILLS</strong> · EAST AFRICA</p>
-      <h1 class="hero-title">The classic Rwanda loop:<br><strong><em>Kigali to the rainforest & savannah</em></strong></h1>
-      <p class="hero-sub"><strong>A 7‑day self‑drive route designed for modern explorers.</strong> National parks, lakeshore lodges, and mountain gorillas — all in one seamless journey.</p>
+      <p class="hero-eyebrow"><strong>{p.heroLabel}</strong></p>
+      <h1 class="hero-title">{p.heroTitle}</h1>
+      <p class="hero-sub">{p.heroSub}</p>
     </div>
     <div class="hero-scroll" onclick="document.getElementById('destinations')?.scrollIntoView({behavior:'smooth'})">
       <div class="scroll-line"></div>
@@ -25,338 +53,129 @@ import SponsorBanner from '../components/SponsorBanner.astro';
     </div>
   </section>
 
-  <!-- Ad Slot 1: Top Banner (after hero) -->
   <div class="ad-container">
     <div class="ad-label">Advertisement</div>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8770614237621568"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8770614237621568"
+      data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
   <SponsorBanner placement="homepage" />
+
   <section id="intro" style="padding:6rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start">
     <div class="intro-left reveal">
-      <span class="s-label" style="background:rgba(0,158,96,0.1); padding:0.3rem 0.8rem; border-radius:40px; font-weight:bold;">🇷🇼 RWANDA ROAD TRIP</span>
-      <h2 class="s-heading" style="margin-top:1.5rem;">We make complex travel<br><strong><em>simple — even on the move</em></strong></h2>
+      <span class="s-label" style="background:rgba(0,158,96,0.1); padding:0.3rem 0.8rem; border-radius:40px; font-weight:bold;">{p.introLabel}</span>
+      <h2 class="s-heading" style="margin-top:1.5rem;">{p.introHeading}</h2>
     </div>
     <div class="intro-right reveal d2">
-      <p><strong>This isn't just a map. It's a fully supported travel experience:</strong> from visa assistance to hand‑picked lodges, 24/7 support, and real‑time route monitoring. Your Rwanda road trip, managed end to end.</p>
-      <p style="margin-top:1.2rem"><strong>We manage the entire journey</strong> — visa applications, gorilla permits, safari bookings, and cultural experiences — so you can focus on what matters: experiencing the magic of the Land of a Thousand Hills.</p>
+      {p.intro?.map((line) => <p style="margin-top:1.2rem">{line}</p>)}
     </div>
   </section>
-
-  <!-- Marquee -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <div class="marquee-item"><strong>🚗 KIGALI → AKAGERA → MUSANZE → RUBAVU → KARONGI → NYUNGWE → KIGALI</strong><div class="marquee-dot"></div></div>
-      <div class="marquee-item"><strong>🦍 GORILLA TREKKING</strong><div class="marquee-dot"></div></div>
-      <div class="marquee-item"><strong>🦁 BIG FIVE SAFARI</strong><div class="marquee-dot"></div></div>
-      <div class="marquee-item"><strong>💧 LAKE KIVU ESCAPES</strong><div class="marquee-dot"></div></div>
-      <div class="marquee-item"><strong>🌿 NYUNGWE FOREST</strong><div class="marquee-dot"></div></div>
-      <div class="marquee-item"><strong>🤖 AI ITINERARY PLANNER</strong><div class="marquee-dot"></div></div>
-    </div>
-  </div>
 
   <!-- Destinations Section with Route Stops -->
   <section id="destinations">
     <div class="dest-intro">
       <span class="s-label reveal"><strong>THE ROUTE DEEP DIVE</strong></span>
       <h2 class="s-heading reveal d1">Seven days,<br><strong><em>six unforgettable stops</em></strong></h2>
-      <p class="s-body reveal d2"><strong>Kigali → Akagera → Musanze → Rubavu → Karongi → Nyungwe → Kigali</strong><br>Click any car marker on the map to explore each destination along this classic Rwanda circuit.</p>
+      <p class="s-body reveal d2"><strong>{routeStops.map((d) => d.data.name).join(' → ')} → {routeStops[0]?.data.name}</strong><br>Click any car marker on the map to explore each destination along this classic Rwanda circuit.</p>
     </div>
-    
-    <!-- Route Stops Pills -->
-    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-bottom: 3rem; padding: 0 2rem;">
-      <span style="background: var(--gold); color: var(--ink); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem; font-weight: bold;">🚗 KIGALI (Start)</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;">→</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;"><strong>AKAGERA</strong> (Safari)</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;">→</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;"><strong>MUSANZE</strong> (Gorillas)</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;">→</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;"><strong>RUBAVU</strong> (Lake Kivu)</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;">→</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;"><strong>KARONGI</strong> (Peninsula)</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;">→</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;"><strong>NYUNGWE</strong> (Forest)</span>
-      <span style="background: var(--bg-off); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem;">→</span>
-      <span style="background: var(--gold); color: var(--ink); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.75rem; font-weight: bold;">🚗 KIGALI (Return)</span>
-    </div>
-    
+
     <div class="dest-list">
-      <!-- Kigali -->
-      <div class="dest-row">
-        <div class="dest-img-side reveal-left">
-          <img src="/images/kigali_city_view_1763982611089.png" alt="Kigali city skyline" loading="lazy">
+      {routeStops.map((d, i) => (
+        <div class={`dest-row ${i % 2 === 1 ? 'reverse' : ''}`}>
+          <div class="dest-img-side">
+            <img src={d.data.heroImage} alt={d.data.name} loading="lazy" />
+          </div>
+          <div class="dest-text-side">
+            <div class="dest-num"><strong style="color:var(--gold);">{d.data.tag}</strong></div>
+            <div class="dest-tag-pill"><strong>{d.data.label.toUpperCase()}</strong></div>
+            <h3 class="dest-name"><strong>{d.data.name}</strong></h3>
+            <p class="dest-desc">{d.data.intro}</p>
+            <a href={`/destinations/${d.slug}`} class="dest-link"><strong>EXPLORE {d.data.name.split(' ')[0].toUpperCase()}</strong></a>
+          </div>
         </div>
-        <div class="dest-text-side">
-          <div class="dest-num reveal"><strong style="color:var(--gold);">START/END</strong></div>
-          <div class="dest-tag-pill reveal d1"><strong>CAPITAL CITY</strong></div>
-          <h3 class="dest-name reveal d1"><strong>Kigali</strong></h3>
-          <p class="dest-desc reveal d2"><strong>Africa's cleanest city.</strong> Pick up your 4x4, visit the Genocide Memorial, and enjoy world-class dining before hitting the road. Return here for farewell dinner and departure.</p>
-          <a href="/destinations/kigali" class="dest-link reveal d3"><strong>EXPLORE KIGALI</strong></a>
-        </div>
-      </div>
-      
-      <!-- Ad Slot 2: Between Kigali and Akagera -->
-      <div class="ad-in-content">
-        <div class="ad-label">Advertisement</div>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8770614237621568"
-             data-ad-slot="1234567891"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-      
-      <!-- Akagera -->
-      <div class="dest-row reverse">
-        <div class="dest-img-side reveal-right">
-          <img src="/images/visa_application_desk_1763983510721.png" alt="Akagera National Park safari" loading="lazy">
-        </div>
-        <div class="dest-text-side">
-          <div class="dest-num reveal"><strong style="color:var(--gold);">DAY 1-2</strong></div>
-          <div class="dest-tag-pill reveal d1"><strong>BIG FIVE SAFARI</strong></div>
-          <h3 class="dest-name reveal d1"><strong>Akagera National Park</strong></h3>
-          <p class="dest-desc reveal d2"><strong>The only savannah park in Rwanda.</strong> Lions, elephants, giraffes, zebras, and boat safaris on Lake Ihema. A conservation success story with all of the Big Five now roaming freely.</p>
-          <a href="/destinations/akagera" class="dest-link reveal d3"><strong>EXPLORE AKAGERA</strong></a>
-        </div>
-      </div>
-      
-      <!-- Musanze -->
-      <div class="dest-row">
-        <div class="dest-img-side reveal-left">
-          <img src="/images/rwanda_gorilla_nature_1763982585054.png" alt="Mountain gorilla in Volcanoes National Park" loading="lazy">
-        </div>
-        <div class="dest-text-side">
-          <div class="dest-num reveal"><strong style="color:var(--gold);">DAY 3-4</strong></div>
-          <div class="dest-tag-pill reveal d1"><strong>GORILLA TREKKING</strong></div>
-          <h3 class="dest-name reveal d1"><strong>Musanze</strong></h3>
-          <p class="dest-desc reveal d2"><strong>Gateway to Volcanoes National Park.</strong> Home to Rwanda's iconic mountain gorillas, five ancient volcanoes, and lava tube caves. A highland world of mist, bamboo forests, and encounters that change lives.</p>
-          <a href="/destinations/musanze" class="dest-link reveal d3"><strong>EXPLORE MUSANZE</strong></a>
-        </div>
-      </div>
-      
-      <!-- Rubavu (Gisenyi) -->
-      <div class="dest-row reverse">
-        <div class="dest-img-side reveal-right">
-          <img src="/images/rwanda_landscape_hero_1763982560164.png" alt="Lake Kivu at golden hour" loading="lazy">
-        </div>
-        <div class="dest-text-side">
-          <div class="dest-num reveal"><strong style="color:var(--gold);">DAY 4-5</strong></div>
-          <div class="dest-tag-pill reveal d1"><strong>LAKE KIVU</strong></div>
-          <h3 class="dest-name reveal d1"><strong>Rubavu (Gisenyi)</strong></h3>
-          <p class="dest-desc reveal d2"><strong>Rwanda's lakeside escape.</strong> White-sand beaches along Lake Kivu, kayaking at sunrise, fresh tilapia dinners, and a pace of life that slows time itself — perfect post-gorilla relaxation.</p>
-          <a href="/destinations/gisenyi" class="dest-link reveal d3"><strong>EXPLORE RUBAVU</strong></a>
-        </div>
-      </div>
-      
-      <!-- Karongi -->
-      <div class="dest-row">
-        <div class="dest-img-side reveal-left">
-          <img src="/images/kigali_modern_life_1763983567881.png" alt="Karongi peninsula" loading="lazy">
-        </div>
-        <div class="dest-text-side">
-          <div class="dest-num reveal"><strong style="color:var(--gold);">DAY 5-6</strong></div>
-          <div class="dest-tag-pill reveal d1"><strong>PENINSULA PARADISE</strong></div>
-          <h3 class="dest-name reveal d1"><strong>Karongi</strong></h3>
-          <p class="dest-desc reveal d2"><strong>A peninsula town draped in rolling green hills</strong> above Lake Kivu. Offers boat trips to scenic islands, the Bisesero Memorial, and stunning lake vistas. A hidden gem on the Rwandan circuit.</p>
-          <a href="/destinations/karongi" class="dest-link reveal d3"><strong>EXPLORE KARONGI</strong></a>
-        </div>
-      </div>
-      
-      <!-- Nyungwe -->
-      <div class="dest-row reverse">
-        <div class="dest-img-side reveal-right">
-          <img src="/images/rwanda_mountains_vista_1763983542124.png" alt="Nyungwe Forest canopy walk" loading="lazy">
-        </div>
-        <div class="dest-text-side">
-          <div class="dest-num reveal"><strong style="color:var(--gold);">DAY 6-7</strong></div>
-          <div class="dest-tag-pill reveal d1"><strong>RAINFOREST</strong></div>
-          <h3 class="dest-name reveal d1"><strong>Nyungwe Forest</strong></h3>
-          <p class="dest-desc reveal d2"><strong>Ancient montane rainforest.</strong> Canopy walk, chimpanzee tracking, and waterfalls. One of Africa's oldest forests with 13 primate species and over 300 bird species.</p>
-          <a href="/destinations/nyungwe" class="dest-link reveal d3"><strong>EXPLORE NYUNGWE</strong></a>
-        </div>
-      </div>
+      ))}
     </div>
   </section>
 
   <!-- Stats Section -->
   <section id="stats">
     <div class="stats-grid">
-      <div class="stat-cell reveal">
-        <div class="stat-num"><strong>1,500</strong><span style="font-size:.4em">+</span></div>
-        <div class="stat-label"><strong>SPECIES OF BIRDS & WILDLIFE</strong></div>
-      </div>
-      <div class="stat-cell reveal d1">
-        <div class="stat-num"><strong>$1,500</strong></div>
-        <div class="stat-label"><strong>GORILLA PERMIT — WORTH EVERY CENT</strong></div>
-      </div>
-      <div class="stat-cell reveal d2">
-        <div class="stat-num"><strong>72</strong><span style="font-size:.4em">HR</span></div>
-        <div class="stat-label"><strong>AVERAGE E-VISA APPROVAL TIME</strong></div>
-      </div>
-      <div class="stat-cell reveal d3">
-        <div class="stat-num"><strong>#1</strong></div>
-        <div class="stat-label"><strong>CLEANEST CITY IN AFRICA — KIGALI</strong></div>
-      </div>
+      {p.stats?.map((stat) => (
+        <div class="stat-cell reveal">
+          <div class="stat-num"><strong>{stat.number}</strong>{stat.suffix && <span style="font-size:.4em">{stat.suffix}</span>}</div>
+          <div class="stat-label"><strong>{stat.label}</strong></div>
+        </div>
+      ))}
     </div>
   </section>
-
-  <!-- Ad Slot 3: Between Stats and Services -->
-  <div class="ad-container">
-    <div class="ad-label">Advertisement</div>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8770614237621568"
-         data-ad-slot="1234567892"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
 
   <!-- Services Section -->
   <section id="services">
-    <span class="s-label reveal"><strong>WHAT WE OFFER</strong></span>
-    <h2 class="s-heading reveal d1">Beyond the reach<br>of <strong><em>ordinary travel</em></strong></h2>
+    <span class="s-label reveal"><strong>{p.servicesLabel}</strong></span>
+    <h2 class="s-heading reveal d1">{p.servicesHeading}</h2>
     <div class="svc-grid">
-      <a href="/visa" class="svc-cell reveal">
-        <div class="svc-icon">🛂</div>
-        <div class="svc-title"><strong>Visa Services</strong></div>
-        <p class="svc-desc"><strong>Step-by-step guidance</strong> on Rwanda's e-visa for every nationality. Tourist, business, student, and transit visas explained clearly.</p>
-        <span class="svc-arrow"><strong>LEARN MORE →</strong></span>
-      </a>
-      <a href="/itinerary" class="svc-cell reveal d1">
-        <div class="svc-icon">✦</div>
-        <div class="svc-title"><strong>AI Itinerary Planner</strong></div>
-        <p class="svc-desc"><strong>Describe your dream trip</strong> — our AI builds a personalized day-by-day Rwanda itinerary with accommodations and activities.</p>
-        <span class="svc-arrow"><strong>PLAN YOUR TRIP →</strong></span>
-      </a>
-      <a href="/tours" class="svc-cell reveal d2">
-        <div class="svc-icon">🚗</div>
-        <div class="svc-title"><strong>Self-Drive Tours</strong></div>
-        <p class="svc-desc"><strong>Curated road trips, 4x4 rentals,</strong> and guided self-drive packages for the classic Rwanda circuit. Everything arranged.</p>
-        <span class="svc-arrow"><strong>BROWSE TOURS →</strong></span>
-      </a>
+      {p.services?.map((svc) => (
+        <a href={svc.link} class="svc-cell reveal">
+          <div class="svc-icon">{svc.icon}</div>
+          <div class="svc-title"><strong>{svc.title}</strong></div>
+          <p class="svc-desc">{svc.desc}</p>
+          <span class="svc-arrow"><strong>{svc.linkText}</strong></span>
+        </a>
+      ))}
     </div>
   </section>
 
-  <!-- AI Itinerary Demo -->
-  <div class="s">
-    <div class="ai-section">
-      <span class="s-label" style="color:var(--gold);"><strong>AI-POWERED PLANNING</strong></span>
-      <h2 style="font-family:var(--serif); font-size:1.8rem; font-weight:400;">Create your<br><strong style="color:var(--gold);">Rwanda itinerary</strong></h2>
-      <div class="ai-form">
-        <select id="purposeSelect">
-          <option value="leisure">Leisure & Culture</option>
-          <option value="adventure">Adventure & Wildlife</option>
-          <option value="honeymoon">Honeymoon</option>
-          <option value="business">Business</option>
-        </select>
-        <input type="number" id="daysCount" placeholder="Days" value="5" min="1" max="21">
-        <select id="styleSelect">
-          <option value="budget">Budget Traveler</option>
-          <option value="midrange">Mid-Range Comfort</option>
-          <option value="luxury">Luxury Experience</option>
-        </select>
-        <button id="generateItineraryBtn"><strong>GENERATE →</strong></button>
-      </div>
-      <div id="aiResult" class="ai-result">
-        <h3 style="color:var(--gold); margin-bottom:1rem;"><strong>✨ YOUR AI-CRAFTED ADVENTURE</strong></h3>
-        <div id="itineraryText" style="line-height:1.8; color:var(--ink2);"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ad Slot 4: Before Editorial Section -->
   <div class="ad-container">
     <div class="ad-label">Advertisement</div>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8770614237621568"
-         data-ad-slot="1234567893"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8770614237621568"
+      data-ad-slot="1234567893" data-ad-format="auto" data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
-  <!-- Editorial Section -->
-  <section id="editorial">
-    <span class="s-label reveal"><strong>TRAVEL INTELLIGENCE</strong></span>
-    <h2 class="s-heading reveal d1">Trusted by travelers<br><strong><em>who return</em></strong></h2>
-    <div class="editorial-grid">
-      <div>
-        <a href="/guides/gorilla-trekking" class="article-feature reveal">
-          <img src="/images/rwanda_gorilla_nature_1763982585054.png" alt="Mountain gorilla encounter">
-          <div class="article-feature-body">
-            <span class="art-cat"><strong>GORILLA TREKKING</strong></span>
-            <h3><strong>How to Book a Rwanda Gorilla Trekking Permit</strong></h3>
-            <p><strong>Only 96 permits issued daily</strong> across 8 habituated gorilla families. Here's everything you need to know to secure yours.</p>
-            <span class="art-link"><strong>READ FULL GUIDE →</strong></span>
-          </div>
-        </a>
-      </div>
+  <!-- Editorial Section: latest guides, always fresh from the guides collection -->
+  {guides.length > 0 && (
+    <section id="editorial">
+      <span class="s-label reveal"><strong>TRAVEL INTELLIGENCE</strong></span>
+      <h2 class="s-heading reveal d1">Trusted by travelers<br><strong><em>who return</em></strong></h2>
       <div class="articles-list">
-        <a href="/guides/rwanda-visa-requirements" class="article-mini reveal">
-          <span class="art-cat"><strong>VISA GUIDE</strong></span>
-          <h4><strong>Rwanda Visa Requirements 2025</strong></h4>
-          <p>Complete country-by-country breakdown. Most nationalities qualify for e-visa in 72 hours.</p>
-        </a>
-        <a href="/guides/best-time-visit-rwanda" class="article-mini reveal d1">
-          <span class="art-cat"><strong>PLANNING</strong></span>
-          <h4><strong>Best Time to Visit Rwanda 2025</strong></h4>
-          <p>Month-by-month breakdown of weather, crowds, and wildlife viewing opportunities.</p>
-        </a>
-        <a href="/guides/akagera-safari" class="article-mini reveal d2">
-          <span class="art-cat"><strong>SAFARI</strong></span>
-          <h4><strong>Akagera: Rwanda's Big Five Safari Secret</strong></h4>
-          <p>Lions returned in 2015. Rhinos in 2017. Today all Big Five roam freely.</p>
-        </a>
+        {guides.map((g) => (
+          <a href={`/guides/${g.slug}`} class="article-mini reveal">
+            <span class="art-cat"><strong>{g.data.label.toUpperCase()}</strong></span>
+            <h4><strong>{g.data.title}</strong></h4>
+            <p>{g.data.intro}</p>
+          </a>
+        ))}
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- Testimonial -->
   <div style="background: var(--bg-off); padding: 4rem 2rem; text-align: center;">
     <div style="max-width: 700px; margin: 0 auto;">
-      <div style="font-family: var(--serif); font-size: 1.3rem; color: var(--ink-light); font-style: italic;">“The road trip was flawlessly planned — the route, the accommodation, even the car marker on the map made us feel guided. The team at RwandaVisa handled everything.”</div>
-      <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--gold); font-weight: bold;">— Amelia, California (self‑drive Rwanda, 2025)</div>
+      <div style="font-family: var(--serif); font-size: 1.3rem; color: var(--ink-light); font-style: italic;">"{p.testimonialQuote}"</div>
+      <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--gold); font-weight: bold;">{p.testimonialAuthor}</div>
     </div>
-  </div>
-
-  <!-- Ad Slot 5: Before CTA -->
-  <div class="ad-container">
-    <div class="ad-label">Advertisement</div>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8770614237621568"
-         data-ad-slot="1234567894"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
   <!-- CTA Section -->
   <section id="cta">
     <div class="cta-content">
-      <span class="s-label" style="color:rgba(255,255,255,0.8);"><strong>READY TO DRIVE THE THOUSAND HILLS?</strong></span>
-      <h2 class="cta-heading">Build your<br><strong><em>custom road trip</em></strong></h2>
+      <span class="s-label" style="color:rgba(255,255,255,0.8);"><strong>{p.ctaLabel}</strong></span>
+      <h2 class="cta-heading">{p.ctaHeading}</h2>
       <div class="cta-row">
-        <a href="/visa" class="btn-gold"><strong>GET VISA</strong></a>
-        <a href="/itinerary" class="btn-outline-gold"><strong>PLAN MY ROUTE</strong></a>
+        {p.ctaButtons?.map((btn, i) => (
+          <a href={btn.link} class={i === 0 ? 'btn-gold' : 'btn-outline-gold'}><strong>{btn.label}</strong></a>
+        ))}
       </div>
     </div>
   </section>
 
   <Footer />
 
-  <!-- Load Leaflet and Routing Machine in correct order -->
+  <!-- Load Leaflet and Routing Machine, then draw the route from destinations data -->
+  <script type="application/json" id="route-data" set:html={JSON.stringify(mapWaypoints)} />
   <script>
-    // Function to load scripts in sequence
     function loadScript(src, callback) {
       const script = document.createElement('script');
       script.src = src;
@@ -365,7 +184,6 @@ import SponsorBanner from '../components/SponsorBanner.astro';
       document.head.appendChild(script);
     }
 
-    // Load Leaflet CSS
     const leafletCSS = document.createElement('link');
     leafletCSS.rel = 'stylesheet';
     leafletCSS.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
@@ -376,54 +194,29 @@ import SponsorBanner from '../components/SponsorBanner.astro';
     routingCSS.href = 'https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css';
     document.head.appendChild(routingCSS);
 
-    // Load Leaflet first, then Routing Machine, then initialize map
     loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', () => {
-      console.log('Leaflet loaded');
       loadScript('https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js', () => {
-        console.log('Routing Machine loaded');
-        initializeMap();
+        initMap();
       });
     });
 
-    function initializeMap() {
-      // Wait for DOM to be fully ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => initMap());
-      } else {
-        initMap();
-      }
-    }
-
     function initMap() {
-      // Check if L is defined
       if (typeof L === 'undefined') {
         console.error('Leaflet (L) is not defined');
         return;
       }
 
-      // Initialize the map
+      const routeWaypoints = JSON.parse(document.getElementById('route-data').textContent);
+
       const map = L.map('rwandaMap').setView([-1.9441, 29.8739], 7.5);
-      
-      // Add the tile layer
+
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
         subdomains: 'abcd',
         maxZoom: 13,
         minZoom: 7
       }).addTo(map);
-      
-      // Define route waypoints in order
-      const routeWaypoints = [
-        { name: "Kigali", coords: [-1.9441, 30.0619], desc: "Start your journey in Africa's cleanest city", tag: "START/END" },
-        { name: "Akagera", coords: [-1.9000, 30.7853], desc: "Big Five safari & boat on Lake Ihema", tag: "DAY 1-2" },
-        { name: "Musanze", coords: [-1.4989, 29.6347], desc: "Gorilla trekking in Volcanoes NP", tag: "DAY 3-4" },
-        { name: "Rubavu", coords: [-1.7023, 29.2564], desc: "Lake Kivu beach escape", tag: "DAY 4-5" },
-        { name: "Karongi", coords: [-2.0149, 29.343], desc: "Peninsula town & island boat trips", tag: "DAY 5-6" },
-        { name: "Nyungwe", coords: [-2.4869, 29.0389], desc: "Canopy walk + chimpanzee trek", tag: "DAY 6-7" },
-        { name: "Kigali", coords: [-1.9441, 30.0619], desc: "Return, farewell dinner", tag: "RETURN" }
-      ];
-      
-      // Custom car icon
+
       const carIcon = L.divIcon({
         className: 'custom-car-marker',
         html: `<div style="background: #1e1e1e; width: 32px; height: 32px; border-radius: 8px 8px 4px 4px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border-bottom: 2px solid #c9a96e;">
@@ -434,9 +227,8 @@ import SponsorBanner from '../components/SponsorBanner.astro';
         iconSize: [32, 32],
         popupAnchor: [0, -16]
       });
-      
-      // Add car markers for each waypoint
-      routeWaypoints.forEach((wp, idx) => {
+
+      routeWaypoints.forEach((wp) => {
         const marker = L.marker(wp.coords, { icon: carIcon }).addTo(map);
         marker.bindPopup(`
           <div style="font-family: 'Inter', sans-serif; padding: 8px; min-width: 200px;">
@@ -446,16 +238,15 @@ import SponsorBanner from '../components/SponsorBanner.astro';
             <strong style="color: #c9a96e; font-size: 16px; display: block; margin-bottom: 5px;">🚗 ${wp.name}</strong>
             <p style="margin: 5px 0; font-size: 11px; color: #4a4a4a;">${wp.desc}</p>
             <hr style="margin: 8px 0; border-color: #eee;">
-            <a href="/destinations/${wp.name.toLowerCase()}" style="color: #009E60; text-decoration: none; font-size: 11px; font-weight: bold;">EXPLORE →</a>
+            <a href="/destinations/${wp.slug}" style="color: #009E60; text-decoration: none; font-size: 11px; font-weight: bold;">EXPLORE →</a>
           </div>
         `);
       });
-      
-      // Draw the route using Leaflet Routing Machine
-      const waypointsLatLng = routeWaypoints.map(wp => L.latLng(wp.coords[0], wp.coords[1]));
-      
+
+      const waypointsLatLng = routeWaypoints.map((wp) => L.latLng(wp.coords[0], wp.coords[1]));
+
       try {
-        const routingControl = L.Routing.control({
+        L.Routing.control({
           waypoints: waypointsLatLng,
           routeWhileDragging: false,
           show: false,
@@ -470,134 +261,25 @@ import SponsorBanner from '../components/SponsorBanner.astro';
           showAlternatives: false,
           createMarker: function() { return null; }
         }).addTo(map);
-        
-        // Hide the routing container
+
         setTimeout(() => {
           const container = document.querySelector('.leaflet-routing-container');
           if (container) container.style.display = 'none';
         }, 500);
       } catch (err) {
         console.warn('Routing machine error:', err);
-        // Fallback: just draw a polyline
-        const latlngs = routeWaypoints.map(wp => wp.coords);
-        const polyline = L.polyline(latlngs, { color: '#c9a96e', weight: 4, dashArray: '8, 8' }).addTo(map);
+        const latlngs = routeWaypoints.map((wp) => wp.coords);
+        L.polyline(latlngs, { color: '#c9a96e', weight: 4, dashArray: '8, 8' }).addTo(map);
       }
-      
-      // Fit map bounds to show all stops
-      const bounds = L.latLngBounds(routeWaypoints.map(wp => wp.coords));
+
+      const bounds = L.latLngBounds(routeWaypoints.map((wp) => wp.coords));
       map.fitBounds(bounds.pad(0.15));
-      
-      // Store map globally
+
       window.rwandaMap = map;
     }
-
-    // AI Itinerary Generator
-    const itineraries = {
-      leisure: {
-        budget: `<strong>Day 1:</strong> Arrive Kigali, pick up 4x4<br>
-<strong>Day 2:</strong> Drive to Akagera, afternoon safari<br>
-<strong>Day 3:</strong> Full day Akagera safari<br>
-<strong>Day 4:</strong> Drive to Musanze<br>
-<strong>Day 5:</strong> Golden monkey trek<br>
-<strong>Day 6:</strong> Drive to Rubavu, Lake Kivu<br>
-<strong>Day 7:</strong> Return to Kigali`,
-        midrange: `<strong>Day 1:</strong> Arrive Kigali, stay at The Retreat<br>
-<strong>Day 2:</strong> Drive to Akagera, evening safari<br>
-<strong>Day 3:</strong> Full safari + boat on Lake Ihema<br>
-<strong>Day 4:</strong> Drive to Musanze, Five Volcanoes Hotel<br>
-<strong>Day 5:</strong> Gorilla trekking in Volcanoes NP<br>
-<strong>Day 6:</strong> Drive to Rubavu, beach resort<br>
-<strong>Day 7:</strong> Return to Kigali, farewell dinner`,
-        luxury: `<strong>Day 1:</strong> VIP arrival, Kigali Marriott<br>
-<strong>Day 2:</strong> Helicopter to Akagera, Ruzizi Tented Lodge<br>
-<strong>Day 3:</strong> Private safari + bush dinner<br>
-<strong>Day 4:</strong> Helicopter to Musanze, Bisate Lodge<br>
-<strong>Day 5:</strong> Private gorilla trek + champagne picnic<br>
-<strong>Day 6:</strong> Helicopter to Rubavu, Lake Kivu Serena<br>
-<strong>Day 7:</strong> VIP return to Kigali`
-      },
-      adventure: {
-        budget: `<strong>Day 1:</strong> Arrive Kigali<br>
-<strong>Day 2:</strong> Drive to Akagera, camping<br>
-<strong>Day 3:</strong> Safari + night drive<br>
-<strong>Day 4:</strong> Drive to Musanze<br>
-<strong>Day 5:</strong> Golden monkey trek<br>
-<strong>Day 6:</strong> Drive to Rubavu<br>
-<strong>Day 7:</strong> Return to Kigali`,
-        midrange: `<strong>Day 1-2:</strong> Akagera NP safari & boat<br>
-<strong>Day 3-4:</strong> Musanze gorilla trekking<br>
-<strong>Day 5-6:</strong> Rubavu kayaking & beach<br>
-<strong>Day 7:</strong> Return to Kigali`,
-        luxury: `<strong>Day 1-2:</strong> Akagera private safari<br>
-<strong>Day 3-4:</strong> Musanze luxury lodge + gorillas<br>
-<strong>Day 5-6:</strong> Rubavu water sports + spa<br>
-<strong>Day 7:</strong> Kigali gourmet farewell`
-      },
-      honeymoon: {
-        budget: `<strong>Day 1:</strong> Romantic dinner in Kigali<br>
-<strong>Day 2:</strong> Drive to Akagera<br>
-<strong>Day 3:</strong> Safari + sunset boat<br>
-<strong>Day 4:</strong> Drive to Musanze<br>
-<strong>Day 5:</strong> Gorilla trekking<br>
-<strong>Day 6:</strong> Drive to Rubavu, couples massage<br>
-<strong>Day 7:</strong> Return to Kigali`,
-        midrange: `<strong>Day 1:</strong> Arrive Kigali, The Retreat<br>
-<strong>Day 2-3:</strong> Akagera safari + luxury lodge<br>
-<strong>Day 4-5:</strong> Musanze gorillas + Five Volcanoes Hotel<br>
-<strong>Day 6:</strong> Rubavu beach + sunset cruise<br>
-<strong>Day 7:</strong> Return to Kigali`,
-        luxury: `<strong>Day 1:</strong> VIP arrival, Kigali Marriott<br>
-<strong>Day 2-3:</strong> Akagera private safari + Ruzizi Lodge<br>
-<strong>Day 4-5:</strong> Bisate Lodge + private gorilla trek<br>
-<strong>Day 6:</strong> Lake Kivu Serena + private yacht<br>
-<strong>Day 7:</strong> VIP departure`
-      },
-      business: {
-        budget: `<strong>Day 1:</strong> Arrive Kigali<br>
-<strong>Day 2-3:</strong> Meetings at KCC<br>
-<strong>Day 4:</strong> Networking events<br>
-<strong>Day 5:</strong> Quick Akagera day trip<br>
-<strong>Day 6:</strong> Meetings<br>
-<strong>Day 7:</strong> Departure`,
-        midrange: `<strong>Day 1:</strong> VIP arrival<br>
-<strong>Day 2-4:</strong> KCC meetings + business dinners<br>
-<strong>Day 5:</strong> Day trip to Bugesera<br>
-<strong>Day 6:</strong> Corporate team building<br>
-<strong>Day 7:</strong> Departure`,
-        luxury: `<strong>Day 1:</strong> Executive arrival<br>
-<strong>Day 2-4:</strong> Private meeting spaces<br>
-<strong>Day 5:</strong> Corporate retreat in Musanze<br>
-<strong>Day 6:</strong> Executive networking<br>
-<strong>Day 7:</strong> VIP departure`
-      }
-    };
-    
-    // Wait for DOM to be ready before adding event listener
-    document.addEventListener('DOMContentLoaded', () => {
-      const generateBtn = document.getElementById('generateItineraryBtn');
-      if (generateBtn) {
-        generateBtn.addEventListener('click', () => {
-          const purpose = document.getElementById('purposeSelect').value;
-          const style = document.getElementById('styleSelect').value;
-          const days = document.getElementById('daysCount').value;
-          
-          let itinerary = itineraries[purpose]?.[style] || itineraries.leisure.midrange;
-          itinerary = itinerary.replace(/Day (\d+)/g, '<strong style="color: #c9a96e;">Day $1</strong>');
-          itinerary = itinerary.replace(/\n/g, '<br>');
-          
-          const itineraryText = document.getElementById('itineraryText');
-          const aiResult = document.getElementById('aiResult');
-          if (itineraryText && aiResult) {
-            itineraryText.innerHTML = itinerary;
-            aiResult.style.display = 'block';
-          }
-        });
-      }
-    });
   </script>
-  
+
   <style>
-    /* Ensure map container has proper height */
     #rwandaMap {
       background: #e8e4d8;
       width: 100%;
@@ -617,8 +299,6 @@ import SponsorBanner from '../components/SponsorBanner.astro';
     .leaflet-routing-container {
       display: none !important;
     }
-    
-    /* Ad Container Styles */
     .ad-container {
       margin: 2rem auto;
       text-align: center;
@@ -628,16 +308,6 @@ import SponsorBanner from '../components/SponsorBanner.astro';
       border: 1px solid var(--border);
       max-width: 1200px;
     }
-    
-    .ad-in-content {
-      margin: 2rem 0;
-      text-align: center;
-      background: #faf8f2;
-      border-radius: 16px;
-      padding: 1rem;
-      border: 1px solid var(--border);
-    }
-    
     .ad-label {
       font-size: 0.65rem;
       text-transform: uppercase;
@@ -645,9 +315,8 @@ import SponsorBanner from '../components/SponsorBanner.astro';
       letter-spacing: 0.1em;
       margin-bottom: 0.5rem;
     }
-    
     @media (max-width: 768px) {
-      .ad-container, .ad-in-content {
+      .ad-container {
         margin: 1rem;
         padding: 0.8rem;
       }

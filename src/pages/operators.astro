@@ -3,17 +3,21 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import OperatorGrid from '../components/OperatorGrid.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'operators');
+const p = page!.data;
 ---
 
-<Layout title="Rwanda Tour Operators Directory - Rwanda Visa">
+<Layout title={p.title}>
   <Header />
 
   <section id="operators-hero" style="padding-top: 150px; background: var(--bg2);">
     <div class="s">
       <div class="s-narrow" style="margin: 0 auto; text-align: center;">
-        <span class="s-label">Directory</span>
-        <h1 class="s-heading">Rwanda tour<br><em>operators</em></h1>
-        <p class="s-body" style="max-width: 700px; margin: 1.5rem auto 0;">Local, licensed operators for gorilla trekking, safaris, and custom itineraries.</p>
+        <span class="s-label">{p.label}</span>
+        <h1 class="s-heading">{p.heading}</h1>
+        <p class="s-body" style="max-width: 700px; margin: 1.5rem auto 0;">{p.subheading}</p>
       </div>
     </div>
   </section>
@@ -23,14 +27,15 @@ import OperatorGrid from '../components/OperatorGrid.astro';
   <!-- Pitch for operators wanting a listing -->
   <section style="background: var(--bg2);">
     <div class="s" style="text-align: center;">
-      <span class="s-label reveal">For Operators</span>
-      <h2 class="s-heading reveal d1">Get listed<br><em>in front of travelers</em></h2>
-      <p class="s-body" style="max-width: 650px; margin: 1.5rem auto 0;">
-        We work with a limited number of Rwanda-based tour operators, listed directly on our guides, tours, and directory pages.
-        Featured placements get top billing and a badge; standard listings still appear in the full directory.
-      </p>
+      <span class="s-label reveal">{p.ctaLabel}</span>
+      <h2 class="s-heading reveal d1">{p.ctaHeading}</h2>
+      {p.intro?.map((line) => (
+        <p class="s-body" style="max-width: 650px; margin: 1.5rem auto 0;">{line}</p>
+      ))}
       <div style="margin-top: 2rem;">
-        <a href="/contact" class="btn-gold" style="display: inline-block; background: var(--gold); color: var(--bg); padding: 0.8rem 2rem; text-decoration: none;">Enquire about a listing →</a>
+        {p.ctaButtons?.map((btn) => (
+          <a href={btn.link} class="btn-gold" style="display: inline-block; background: var(--gold); color: var(--bg); padding: 0.8rem 2rem; text-decoration: none;">{btn.label}</a>
+        ))}
       </div>
     </div>
   </section>

@@ -1,0 +1,21 @@
+title: Support & Contact - Rwanda Visa
+label: Independent travel guidance
+heading: "Support our work, then get in touch."
+intro:
+  - "We receive many requests for individual visa and travel help. A small contribution helps keep our guides free and allows us to make time for personal questions."
+supportOptions:
+  - amount: "$3"
+    label: A coffee
+  - amount: "$7"
+    label: A helpful reply
+  - amount: "$15"
+    label: Visa support
+contactChannels:
+  - icon: "💬"
+    title: WhatsApp support
+    detail: "Chat with us at +250 782 388 933"
+    url: "https://wa.me/250782388933"
+  - icon: "✉"
+    title: Email support
+    detail: "byja1101@gmail.com"
+    url: "mailto:byja1101@gmail.com?subject=RwandaVisa%20support%20request"

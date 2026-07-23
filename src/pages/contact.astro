@@ -2,25 +2,29 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getEntry } from 'astro:content';
+
+const page = await getEntry('pages', 'contact');
+const p = page!.data;
 
 // This can be overridden in the deployment environment if the donation page changes.
 const supportUrl = import.meta.env.PUBLIC_SUPPORT_URL || 'https://www.paypal.com/donate/?business=4GVQD57J4EWE8&no_recurring=0&item_name=I+hope+i+was+able+to+help+with+your+questions+about+traveling+to+Rwanda&currency_code=USD';
 ---
 
-<Layout title="Support & Contact - Rwanda Visa" description="Support Rwanda Visa and request personal visa or travel assistance.">
+<Layout title={p.title} description="Support Rwanda Visa and request personal visa or travel assistance.">
   <Header />
 
   <section class="s support-hero">
     <div class="support-gate" id="supportGate">
       <img class="support-mark" src="/brand/rwanda-visa-mark.png" alt="Rwanda Visa logo" />
-      <span class="s-label">Independent travel guidance</span>
-      <h1 class="s-heading">Support our work,<br><em>then get in touch.</em></h1>
-      <p class="support-copy">We receive many requests for individual visa and travel help. A small contribution helps keep our guides free and allows us to make time for personal questions.</p>
+      <span class="s-label">{p.label}</span>
+      <h1 class="s-heading">{p.heading}</h1>
+      {p.intro?.map((line) => <p class="support-copy">{line}</p>)}
 
       <div class="support-options" aria-label="Suggested support amounts">
-        <div class="support-option"><strong>$3</strong>A coffee</div>
-        <div class="support-option"><strong>$7</strong>A helpful reply</div>
-        <div class="support-option"><strong>$15</strong>Visa support</div>
+        {p.supportOptions?.map((opt) => (
+          <div class="support-option"><strong>{opt.amount}</strong>{opt.label}</div>
+        ))}
       </div>
 
       <a class="support-button" href={supportUrl} target="_blank" rel="noopener">Support Rwanda Visa ↗</a>
@@ -37,16 +41,13 @@ const supportUrl = import.meta.env.PUBLIC_SUPPORT_URL || 'https://www.paypal.com
     </div>
 
     <div class="private-contact-options">
-      <a class="private-contact-card" href="https://wa.me/250782388933" target="_blank" rel="noopener">
-        <span class="private-contact-icon">💬</span>
-        <span><strong>WhatsApp support</strong><small>Chat with us at +250 782 388 933</small></span>
-        <b>↗</b>
-      </a>
-      <a class="private-contact-card" href="mailto:byja1101@gmail.com?subject=RwandaVisa%20support%20request">
-        <span class="private-contact-icon">✉</span>
-        <span><strong>Email support</strong><small>byja1101@gmail.com</small></span>
-        <b>↗</b>
-      </a>
+      {p.contactChannels?.map((ch) => (
+        <a class="private-contact-card" href={ch.url} target="_blank" rel="noopener">
+          <span class="private-contact-icon">{ch.icon}</span>
+          <span><strong>{ch.title}</strong><small>{ch.detail}</small></span>
+          <b>↗</b>
+        </a>
+      ))}
     </div>
 
     <div style="max-width: 800px; margin: 0 auto; background: var(--bg2); padding: 3rem; border-radius: 12px;">
