@@ -148,13 +148,6 @@ declare module 'astro:content' {
   collection: "destinations";
   data: InferEntrySchema<"destinations">
 } & { render(): Render[".md"] };
-"gisenyi.md": {
-	id: "gisenyi.md";
-  slug: "gisenyi";
-  body: string;
-  collection: "destinations";
-  data: InferEntrySchema<"destinations">
-} & { render(): Render[".md"] };
 "huye.md": {
 	id: "huye.md";
   slug: "huye";
@@ -186,6 +179,13 @@ declare module 'astro:content' {
 "nyungwe.md": {
 	id: "nyungwe.md";
   slug: "nyungwe";
+  body: string;
+  collection: "destinations";
+  data: InferEntrySchema<"destinations">
+} & { render(): Render[".md"] };
+"rubavu.md": {
+	id: "rubavu.md";
+  slug: "rubavu";
   body: string;
   collection: "destinations";
   data: InferEntrySchema<"destinations">
