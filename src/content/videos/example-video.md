@@ -1,6 +1,7 @@
 ---
-title: "Example — replace this with your own video"
-youtubeUrl: https://www.youtube.com/@jenzzly
-description: Open the CMS and edit or delete this entry, then add your real YouTube links here. Paste any youtube.com/watch or youtu.be URL and the page will embed it automatically.
+title: Welcome to our youtube channel
+youtubeUrl: https://www.youtube.com/@rwandavisa
+description: This will be used for our upcoming channel. Thanks for joining
+publishedDate: 2026-07-23T16:44:00.000+02:00
 order: 1
 ---
